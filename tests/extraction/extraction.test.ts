@@ -306,6 +306,10 @@ describe('security and limits', () => {
     const ms = performance.now() - t0;
     expect(out.ok).toBe(true);
     if (out.ok) expect(ingredientLines(out.candidates[0] as RecipeV1)).toEqual(['1 onion', '2 cups stock']);
-    expect(ms).toBeLessThan(1000);
+    // PRD target: < 1 s on a documented baseline laptop. Shared CI runners are
+    // slower and noisy, so CI only guards against large regressions.
+    const budget = process.env.CI ? 3000 : 1000;
+    console.log(`2 MB extraction: ${ms.toFixed(0)} ms (budget ${budget} ms)`);
+    expect(ms).toBeLessThan(budget);
   });
 });
