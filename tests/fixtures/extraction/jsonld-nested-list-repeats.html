@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Synthetic Oat Bars</title>
+<!-- Synthetic fixture. Mimics a page script that builds JSON-LD by reading every
+     <li> under the steps list with textContent, nested items included: the parent
+     step absorbs its sub-steps (without spaces) and each sub-step repeats. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Synthetic Oat Bars",
+  "recipeIngredient": ["2 cups rolled oats", "1/2 cup honey", "1/4 cup butter, melted", "Pinch of salt"],
+  "recipeInstructions": [
+    {"@type": "HowToStep", "text": "Stir the oats, honey, butter and salt in a bowl until evenly coated."},
+    {"@type": "HowToStep", "text": "Pick a pan size below *see notes* Square pan: 9 bars > Press into an 8-inch pan and bake at 350°F (177°C) for 20 minutes.Sheet pan: 16 bars > Press into a quarter sheet pan and bake at 350°F (177°C) for 15 minutes."},
+    {"@type": "HowToStep", "text": "Square pan: 9 bars > Press into an 8-inch pan and bake at 350°F (177°C) for 20 minutes."},
+    {"@type": "HowToStep", "text": "> Press into an 8-inch pan and bake at 350°F (177°C) for 20 minutes."},
+    {"@type": "HowToStep", "text": "Sheet pan: 16 bars > Press into a quarter sheet pan and bake at 350°F (177°C) for 15 minutes."},
+    {"@type": "HowToStep", "text": "> Press into a quarter sheet pan and bake at 350°F (177°C) for 15 minutes."},
+    {"@type": "HowToStep", "text": "Cool completely in the pan, then cut into bars."}
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+<h1>Synthetic Oat Bars</h1>
+<div class="ingredients-card">
+  <h2>Ingredients</h2>
+  <ul>
+    <li>2 cups rolled oats</li>
+    <li>1/2 cup honey</li>
+    <li>1/4 cup butter, melted</li>
+    <li>Pinch of salt</li>
+  </ul>
+</div>
+<div class="directions-wrapper">
+  <h2>Directions</h2>
+  <div class="directions-list">
+    <ol>
+      <li>Stir the oats, honey, butter and salt in a bowl until evenly coated.</li>
+      <li>Pick a pan size below <strong>*see notes*</strong><br>
+        <ol>
+          <li><strong>Square pan: 9 bars</strong><br>
+            <ul><li>&gt; Press into an 8-inch pan and bake at 350°F (177°C) for 20 minutes.</li></ul>
+          </li>
+          <li><strong>Sheet pan: 16 bars</strong><br>
+            <ul><li>&gt; Press into a quarter sheet pan and bake at 350°F (177°C) for 15 minutes.</li></ul>
+          </li>
+        </ol>
+      </li>
+      <li>Cool completely in the pan, then cut into bars.</li>
+    </ol>
+    <p><strong>* Notes *</strong></p>
+    <p>Warm honey mixes in faster than cold honey.</p>
+    <ul>
+      <li><strong>Square pan:</strong><br><ul><li>&gt; Thicker, chewier bars.</li></ul></li>
+      <li><strong>Sheet pan:</strong><br><ul><li>&gt; Thinner, crisper bars.</li></ul></li>
+    </ul>
+  </div>
+</div>
+<div class="form-wrapper" id="comments-ratings">
+  <h1>Comments &amp; Ratings</h1>
+  <div class="callout"><div>Already have an account? Sign in</div></div>
+  <div class="ratings-wrapper"><div>Average rating</div><div>4.0</div></div>
+</div>
+</main>
+</body>
+</html>

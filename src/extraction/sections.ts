@@ -13,7 +13,7 @@ export const NOTES_HEADING = /^(recipe\s+|cook(?:'|’)?s\s+|chef(?:'|’)?s\s+)
 export type SectionKind = 'ingredients' | 'instructions' | 'notes';
 
 export function classifyHeading(text: string): SectionKind | undefined {
-  const t = text.replace(/[:\s]+$/, '').trim();
+  const t = text.replace(/^[\s*•·~=#_\-–—]+|[\s*•·~=#_\-–—:]+$/g, '').trim();
   if (t.length > 60) return undefined;
   if (ING_HEADING.test(t)) return 'ingredients';
   if (INSTR_HEADING.test(t)) return 'instructions';

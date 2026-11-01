@@ -24,7 +24,7 @@ The toolbar click was automated with the Chrome DevTools Protocol method `Extens
 | Site | Status | Result |
 |---|---|---|
 | smittenkitchen.com | OK | 14 ingredients in 4 groups / 8 steps (page layout) |
-| joshuaweissman.com | OK | 13 / 10 (JSON-LD; the site's JSON-LD is now complete) |
+| joshuaweissman.com | OK | 13 / 7 (ingredients from JSON-LD; steps from the page, because the site's runtime JSON-LD flattens nested size options into repeated steps) |
 | bbcgoodfood.com | OK | 6 / 5 |
 | recipetineats.com | OK | 16 / 10 |
 | loveandlemons.com | OK | 11 / 6 |

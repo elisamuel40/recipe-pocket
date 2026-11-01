@@ -281,7 +281,33 @@ function recipeToDraft(r: Obj, graph: Graph): Draft {
   const selfId = typeof r['@id'] === 'string' ? [r['@id']] : [];
   collectSteps(r['recipeInstructions'], graph, c, new Set(selfId), 0, '');
   d.instructionGroups = c.groups.filter((g) => g.steps.length > 0);
+  if (dropNestedRepeats(d)) d.suspectInstructions = true;
   return d;
+}
+
+const squash = (s: string): string => s.replace(/\s+/g, '').toLowerCase();
+
+/**
+ * Some sites build their JSON-LD in the browser by reading every <li> under the
+ * steps list, nested ones included. A parent step then holds the text of its
+ * sub-steps, and each sub-step repeats on its own. Drop the repeats (any step
+ * whose text sits inside another step) and report whether this happened, so
+ * the visible page can supply better-structured steps.
+ */
+function dropNestedRepeats(d: Draft): boolean {
+  const all = d.instructionGroups.flatMap((g) => g.steps.map(squash));
+  let found = false;
+  for (const g of d.instructionGroups) {
+    g.steps = g.steps.filter((step) => {
+      const s = squash(step);
+      if (s.length < 15) return true;
+      const repeat = all.some((other) => other.length > s.length && other.includes(s));
+      if (repeat) found = true;
+      return !repeat;
+    });
+  }
+  d.instructionGroups = d.instructionGroups.filter((g) => g.steps.length > 0);
+  return found;
 }
 
 /** Extract Recipe drafts from all JSON-LD blocks in the document. */

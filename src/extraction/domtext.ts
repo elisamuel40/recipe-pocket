@@ -59,6 +59,8 @@ export function isExcluded(el: Element): boolean {
   if (el.getAttribute('aria-hidden') === 'true') return true;
   const style = el.getAttribute('style');
   if (style && /display\s*:\s*none|visibility\s*:\s*hidden/i.test(style)) return true;
+  // In a real browser, also skip text hidden by stylesheets (form success/error messages, closed modals).
+  if (isCssHidden(el)) return true;
   const role = el.getAttribute('role');
   if (role === 'navigation' || role === 'complementary' || role === 'contentinfo' || role === 'dialog' || role === 'form' || role === 'search') return true;
   const itemtype = el.getAttribute('itemtype') ?? '';
@@ -70,10 +72,28 @@ export function isExcluded(el: Element): boolean {
     const isComment = /comment|disqus|respond/i.test(t);
     // Never drop the article itself or a layout wrapper that holds the page title.
     if (!isComment && (tag === 'article' || el.querySelector('h1'))) continue;
-    if (isComment && el.querySelector('h1') && !/^(comments?|commentlist|comment-list|comments-area|comment-respond|respond|disqus_thread)$/i.test(t)) continue;
+    if (isComment && holdsTitle(el) && !/^(comments?|commentlist|comment-list|comments-area|comment-respond|respond|disqus_thread)$/i.test(t)) continue;
     return true;
   }
   return false;
+}
+
+/**
+ * True when the browser renders el as hidden by CSS. jsdom applies no
+ * stylesheets, so this only acts in Chrome. Elements without a layout box
+ * that are still displayed (display: contents) are kept.
+ */
+function isCssHidden(el: Element): boolean {
+  const check = (el as Element & { checkVisibility?: (o?: object) => boolean }).checkVisibility;
+  if (typeof check !== 'function' || !el.isConnected) return false;
+  const view = el.ownerDocument.defaultView;
+  if (!view || /jsdom/i.test(view.navigator?.userAgent ?? '')) return false;
+  return !check.call(el, { visibilityProperty: true });
+}
+
+/** True when el holds an h1 that is not itself a comments/ratings heading. */
+function holdsTitle(el: Element): boolean {
+  return Array.from(el.querySelectorAll('h1')).some((h) => !/\b(comments?|ratings?|reviews?|replies|discussion)\b/i.test(h.textContent ?? ''));
 }
 
 /** True when el or any ancestor (up to stop) is excluded. */
@@ -218,10 +238,19 @@ export function linearize(root: Element, ctx: ExtractionContext, opts: Linearize
     }
     if (tag === 'li') {
       const list = el.parentElement;
-      emitLines(textLines(el.childNodes, true), el, zone, 'item', list ?? el, list?.localName === 'ol');
-      for (const c of Array.from(el.children)) {
-        if (c.localName === 'ul' || c.localName === 'ol') visit(c, zone);
+      const own = textLines(el.childNodes, true);
+      const nested = Array.from(el.children).filter((c) => c.localName === 'ul' || c.localName === 'ol');
+      const only = soleSubItem(nested);
+      if (only && own.length === 1 && (own[0] as Line).text.length <= 80) {
+        // "Small batch: 12 cookies" + one sub-item "> Use a 1 Tbsp scoop…" reads as one step.
+        const body = textLines(only.childNodes, false).map((l) => l.text.replace(/^[>»›•\-–—]\s*/, '')).join(' ');
+        const label = (own[0] as Line).text;
+        const text = body ? (/[:.]$/.test(label) ? `${label} ${body}` : `${label} — ${body}`) : label;
+        push({ kind: 'item', level: 0, text, lines: [text], zone, el, list: list ?? el, ordered: list?.localName === 'ol' });
+        return;
       }
+      emitLines(own, el, zone, 'item', list ?? el, list?.localName === 'ol');
+      for (const c of nested) visit(c, zone);
       return;
     }
     if (PARA_TAGS.has(tag)) {
@@ -253,6 +282,15 @@ export function linearize(root: Element, ctx: ExtractionContext, opts: Linearize
 
   visit(root, undefined);
   return out;
+}
+
+/** The single <li> across nested lists, when it has no lists of its own. */
+function soleSubItem(lists: Element[]): Element | undefined {
+  const items = lists.flatMap((l) => Array.from(l.children).filter((c) => c.localName === 'li'));
+  if (items.length !== 1) return undefined;
+  const li = items[0] as Element;
+  if (isExcluded(li) || li.querySelector('ul,ol')) return undefined;
+  return li;
 }
 
 function containsBlock(el: Element): boolean {

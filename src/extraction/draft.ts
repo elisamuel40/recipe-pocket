@@ -34,6 +34,8 @@ export interface Draft {
   times: DraftTimes;
   ingredientGroups: { title: string; lines: string[] }[];
   instructionGroups: { title: string; steps: string[] }[];
+  /** Steps exist but look damaged (e.g. nested lists flattened); a later stage may replace them. */
+  suspectInstructions?: boolean;
   notes: string[];
   warnings: string[];
 }
@@ -44,7 +46,7 @@ export function emptyDraft(method: ExtractionMethod): Draft {
 
 export const hasIngredients = (d: Draft): boolean => d.ingredientGroups.some((g) => g.lines.length > 0);
 export const hasInstructions = (d: Draft): boolean => d.instructionGroups.some((g) => g.steps.length > 0);
-export const isComplete = (d: Draft): boolean => hasIngredients(d) && hasInstructions(d);
+export const isComplete = (d: Draft): boolean => hasIngredients(d) && hasInstructions(d) && !d.suspectInstructions;
 export const hasTimes = (d: Draft): boolean => !!(d.times.prep || d.times.cook || d.times.total || d.times.raw.length);
 
 /** Shared state for one extraction run. */
@@ -73,8 +75,9 @@ export function mergeInto(target: Draft, src: Draft, note: string): void {
     target.ingredientGroups = src.ingredientGroups;
     used = true;
   }
-  if (!hasInstructions(target) && hasInstructions(src)) {
+  if ((!hasInstructions(target) || target.suspectInstructions) && hasInstructions(src)) {
     target.instructionGroups = src.instructionGroups;
+    target.suspectInstructions = false;
     used = true;
   }
   if (!target.title && src.title) target.title = src.title;

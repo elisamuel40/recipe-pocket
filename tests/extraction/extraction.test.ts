@@ -209,6 +209,39 @@ describe('fallbacks', () => {
     expect(allText(r)).not.toMatch(/Synthetic Reader|Another Reader|3 cups of jam|Share this|affiliate|First published/);
   });
 
+  it('replaces JSON-LD steps flattened from nested lists with the visible steps', () => {
+    const r = one('jsonld-nested-list-repeats.html');
+    const s = steps(r);
+    // No step repeats inside another, and sub-options are not glued together.
+    for (const a of s) for (const b of s) if (a !== b) expect(b.includes(a)).toBe(false);
+    expect(allText(r)).not.toMatch(/minutes\.Sheet/);
+    expect(s[0]).toMatch(/^Stir the oats/);
+    expect(s.at(-1)).toBe('Cool completely in the pan, then cut into bars.');
+    expect(s.filter((t) => /8-inch pan/.test(t))).toHaveLength(1);
+    expect(s.filter((t) => /quarter sheet pan/.test(t))).toHaveLength(1);
+    // A short option label and its single sub-item become one step.
+    expect(s).toContain('Square pan: 9 bars — Press into an 8-inch pan and bake at 350°F (177°C) for 20 minutes.');
+    expect(s).toHaveLength(5);
+    expect(r.notes).toMatch(/Square pan: Thicker, chewier bars\./);
+    // A comments/ratings region with its own h1 is still excluded.
+    expect(allText(r)).not.toMatch(/Already have an account|Average rating|Comments & Ratings/);
+    // Ingredients still come from the structured data.
+    expect(ingredientLines(r)).toEqual(['2 cups rolled oats', '1/2 cup honey', '1/4 cup butter, melted', 'Pinch of salt']);
+    // "* Notes *" starts the notes; note text is never a step.
+    expect(s.join(' ')).not.toMatch(/Warm honey|chewier|crisper/);
+    expect(r.notes).toMatch(/Warm honey/);
+  });
+
+  it('keeps JSON-LD steps without repeats, dropping nested duplicates when the page has no better steps', () => {
+    const doc = parseHtml(`<html><head><script type="application/ld+json">${JSON.stringify({
+      '@type': 'Recipe', name: 'Only Data', recipeIngredient: ['1 cup flour'],
+      recipeInstructions: ['Mix well. Bake for twenty minutes.', 'Bake for twenty minutes.', 'Cool on a rack.'],
+    })}</script></head><body><p>Nothing visible here.</p></body></html>`);
+    const out = extractFromDocument(doc, URL_);
+    if (!out.ok) throw new Error(out.code);
+    expect(steps(out.candidates[0] as RecipeV1)).toEqual(['Mix well. Bake for twenty minutes.', 'Cool on a rack.']);
+  });
+
   it('reads schema.org microdata and ignores embedded comments', () => {
     const r = one('microdata.html');
     expect(r.extraction.method).toBe('microdata');
