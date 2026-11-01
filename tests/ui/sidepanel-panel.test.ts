@@ -67,6 +67,7 @@ function makeEnv() {
     sendExtract: (req) => new Promise((resolve) => pending.push({ req, resolve })),
     openPage: (p) => env.opened.push(p),
     openOptions: vi.fn(),
+    focusTab: vi.fn(async () => true),
     onMessage: (cb) => (listener = cb),
     onTabActivated: (cb) => (onActivated = cb),
     onTabUpdated: (cb) => (onUpdated = cb),
@@ -202,6 +203,49 @@ describe('side panel: reading', () => {
     t.activate(1);
     expect(root.querySelector('.page-change')!.textContent).toContain('page changed');
     expect(t.pending).toHaveLength(1);
+  });
+
+  it('offers Return to tab, which focuses the original tab and clears the notice', async () => {
+    const t = makeEnv();
+    await mountReaderPanel(root, t.env, onboarded);
+    await flush();
+    resultFor(t.pending[0]!, [recipe()]);
+    await flush();
+    t.activate(5);
+    const back = button(root, 'Return to tab')!;
+    expect(back).toBeTruthy();
+    back.click();
+    await flush();
+    expect(t.env.focusTab).toHaveBeenCalledWith(1);
+    t.activate(1); // Chrome fires onActivated after tabs.update
+    expect(root.querySelector('.page-change')).toBeNull();
+    expect(t.pending).toHaveLength(1);
+  });
+
+  it('explains when the original tab is closed', async () => {
+    const t = makeEnv();
+    t.env.focusTab = vi.fn(async () => false);
+    await mountReaderPanel(root, t.env, onboarded);
+    await flush();
+    resultFor(t.pending[0]!, [recipe()]);
+    await flush();
+    t.activate(5);
+    button(root, 'Return to tab')!.click();
+    await flush();
+    expect(button(root, 'Return to tab')).toBeUndefined();
+    expect(root.querySelector('.page-change')!.textContent).toContain('That tab is closed');
+    expect(button(root, 'Read current tab')).toBeTruthy();
+  });
+
+  it('does not offer Return to tab when the same page navigated', async () => {
+    const t = makeEnv();
+    await mountReaderPanel(root, t.env, onboarded);
+    await flush();
+    resultFor(t.pending[0]!, [recipe()]);
+    await flush();
+    t.update(1, { url: 'https://example.com/other' });
+    expect(root.querySelector('.page-change')!.textContent).toContain('page changed');
+    expect(button(root, 'Return to tab')).toBeUndefined();
   });
 
   it('explains restricted pages', async () => {

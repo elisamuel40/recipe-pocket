@@ -12,6 +12,14 @@ const env: PanelEnv = {
   sendExtract: (req) => chrome.runtime.sendMessage(req),
   openPage: (path) => void chrome.tabs.create({ url: chrome.runtime.getURL(path) }),
   openOptions: () => void chrome.runtime.openOptionsPage(),
+  focusTab: async (tabId) => {
+    try {
+      await chrome.tabs.update(tabId, { active: true });
+      return true;
+    } catch {
+      return false;
+    }
+  },
   onMessage: (cb) => chrome.runtime.onMessage.addListener(cb),
   onTabActivated: (cb) => chrome.tabs.onActivated.addListener(cb),
   onTabUpdated: (cb) => chrome.tabs.onUpdated.addListener((tabId, change) => cb(tabId, change)),

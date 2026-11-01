@@ -46,6 +46,8 @@ export interface PanelEnv {
   /** Open an extension page (path relative to the extension root) in a new tab. */
   openPage(path: string): void;
   openOptions(): void;
+  /** Make tabId the active tab in its window. Resolves false if the tab no longer exists. */
+  focusTab(tabId: number): Promise<boolean>;
   onMessage(
     cb: (msg: unknown, sender: chrome.runtime.MessageSender, sendResponse: (r: unknown) => void) => boolean | void,
   ): void;
@@ -191,7 +193,29 @@ export async function mountReaderPanel(root: HTMLElement, env: PanelEnv, initial
         ? `You switched tabs. What you see here is from another tab${from}.`
         : `The page changed after it was read. What you see here is from the earlier page${from}.`;
     const btn = h('button', { type: 'button', onclick: () => void read() }, 'Read current tab');
-    const el = notice('warn', msg, h('div', { className: 'button-row' }, btn));
+    const buttons: HTMLElement[] = [];
+    const sourceTabId = reader.tabId;
+    if (reader.pageChange === 'tab' && sourceTabId !== null && sourceTabId >= 0) {
+      const back = h(
+        'button',
+        {
+          type: 'button',
+          className: 'primary',
+          onclick: () =>
+            void env.focusTab(sourceTabId).then((ok) => {
+              if (ok) return;
+              back.remove();
+              const gone = 'That tab is closed. Use Read current tab to read the page you have open.';
+              el.querySelector('.notice-body > p')!.textContent = gone;
+              announce(gone);
+            }),
+        },
+        'Return to tab',
+      );
+      buttons.push(back);
+    }
+    buttons.push(btn);
+    const el = notice('warn', msg, h('div', { className: 'button-row' }, ...buttons));
     el.classList.add('page-change');
     noticeHost.appendChild(el);
     announce(msg);
