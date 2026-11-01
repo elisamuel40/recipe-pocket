@@ -254,15 +254,38 @@ export function renderRecipeView(recipe: RecipeV1, opts: RecipeViewOptions): HTM
         'section',
         { className: 'recipe-section notes', 'aria-labelledby': notesId },
         heading(level + 1, { id: notesId }, 'Notes'),
-        recipe.notes
-          .split(/\n{2,}/)
-          .map((p) => p.trim())
-          .filter(Boolean)
-          .map((p) => h('p', { className: 'note-text' }, p)),
+        ...renderNotes(recipe.notes),
       ),
     );
   }
   return article;
+}
+
+/** Short line ending in a colon: a subheading inside the notes ("Storage:"). */
+const NOTE_HEADING = /^[^.!?]{2,60}:$/;
+/** Run-in label at the start of a line ("Small batch: …"), at most 5 words. */
+const NOTE_LABEL = /^((?:[^\s:.!?]+\s){0,4}[^\s:.!?]+:)\s+(\S.*)$/s;
+
+/**
+ * Notes are plain text. Blank lines separate paragraphs; each line is its own
+ * block so topics do not run together. Subheadings and run-in labels are shown
+ * in bold. Text only: nothing from the notes is parsed as markup.
+ */
+export function renderNotes(notes: string): HTMLElement[] {
+  const out: HTMLElement[] = [];
+  for (const para of notes.split(/\n{2,}/)) {
+    const lines = para.split('\n').map((l) => l.trim()).filter(Boolean);
+    lines.forEach((line, i) => {
+      const cls = i === 0 ? 'note-text' : 'note-text note-cont';
+      if (NOTE_HEADING.test(line) && line.split(/\s+/).length <= 8) {
+        out.push(h('p', { className: `${cls} note-heading` }, h('strong', {}, line)));
+        return;
+      }
+      const m = NOTE_LABEL.exec(line);
+      out.push(m ? h('p', { className: cls }, h('strong', {}, m[1] as string), ' ', m[2] as string) : h('p', { className: cls }, line));
+    });
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------

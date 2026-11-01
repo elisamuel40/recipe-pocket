@@ -207,7 +207,8 @@ export function headingStrategy(blocks: Block[], meta: PageMeta, method: Draft['
       sawInstr = true;
       cur.instructionGroups.push(...blocksToInstructions(s.blocks, sectionGroupTitle(s.heading.text)));
     } else {
-      const text = s.blocks.map((b) => (b.kind === 'heading' ? b.text : b.lines.join('\n'))).join('\n');
+      // One paragraph per block so separate topics stay apart.
+      const text = s.blocks.map((b) => (b.kind === 'heading' ? b.text : b.lines.join('\n'))).join('\n\n');
       if (text) cur.notes.push(text);
     }
   }
@@ -490,7 +491,7 @@ function cardDraft(card: Element, ctx: ExtractionContext, meta: PageMeta): Draft
   d.ingredientGroups = blocksToIngredients(ing, d);
   d.instructionGroups = blocksToInstructions(ins);
   const notes = blocks.filter((b) => b.zone === 'notes' && !(b.kind === 'heading' && classifyHeading(b.text) === 'notes'));
-  if (notes.length) d.notes.push(notes.map((b) => b.lines.join('\n')).join('\n'));
+  if (notes.length) d.notes.push(notes.map((b) => b.lines.join('\n')).join('\n\n'));
   if (!d.ingredientGroups.length || !d.instructionGroups.length) {
     const viaHeadings = headingStrategy(blocks, { title: d.title || meta.title }, 'dom')[0];
     if (viaHeadings) {

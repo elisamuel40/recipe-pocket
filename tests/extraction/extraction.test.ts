@@ -223,6 +223,8 @@ describe('fallbacks', () => {
     expect(s).toContain('Square pan: 9 bars — Press into an 8-inch pan and bake at 350°F (177°C) for 20 minutes.');
     expect(s).toHaveLength(5);
     expect(r.notes).toMatch(/Square pan: Thicker, chewier bars\./);
+    // Each note block is its own paragraph.
+    expect(r.notes.split(/\n{2,}/)).toEqual(['Warm honey mixes in faster than cold honey.', 'Square pan: Thicker, chewier bars.', 'Sheet pan: Thinner, crisper bars.']);
     // A comments/ratings region with its own h1 is still excluded.
     expect(allText(r)).not.toMatch(/Already have an account|Average rating|Comments & Ratings/);
     // Ingredients still come from the structured data.

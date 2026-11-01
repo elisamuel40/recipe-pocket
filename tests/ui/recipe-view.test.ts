@@ -69,6 +69,24 @@ describe('renderRecipeView', () => {
     expect(el.querySelectorAll('img')).toHaveLength(0);
   });
 
+  it('shows note subheadings and run-in labels in bold, one block per line', () => {
+    const notes = 'Chop the chocolate by hand.\n\nSizes and uses:\n\nSmall: <b>Great</b> for parties.\nThis size is the best of both worlds: more surface.';
+    const el = renderRecipeView(recipe({ notes }), { factor: ONE, system: 'original' });
+    const ps = [...el.querySelectorAll('.notes .note-text')];
+    expect(ps.map((p) => p.textContent)).toEqual([
+      'Chop the chocolate by hand.',
+      'Sizes and uses:',
+      'Small: <b>Great</b> for parties.',
+      'This size is the best of both worlds: more surface.',
+    ]);
+    expect(ps[1]!.classList.contains('note-heading')).toBe(true);
+    expect(ps[2]!.querySelector('strong')!.textContent).toBe('Small:');
+    // Note text is never parsed as markup; long sentences with a colon get no label.
+    expect(el.querySelector('.notes b')).toBeNull();
+    expect(ps[3]!.querySelector('strong')).toBeNull();
+    expect(ps[0]!.querySelector('strong')).toBeNull();
+  });
+
   it('omits notes when includeNotes is false', () => {
     const el = renderRecipeView(recipe(), { factor: ONE, system: 'original', includeNotes: false });
     expect(el.querySelector('.notes')).toBeNull();
