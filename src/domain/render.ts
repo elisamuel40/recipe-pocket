@@ -78,6 +78,14 @@ export function convertForSystem(q: QuantityRange, unitId: string, system: UnitS
   return { quantity, unit: target };
 }
 
+/**
+ * An equivalent measure right after the unit, e.g. the "(240 ml)" in
+ * "1 cup (240 ml) water". After conversion it would repeat the measure, so the
+ * converted line drops it (the original line stays available).
+ */
+const EQUIVALENT_MEASURE =
+  /^\s*\(\s*(?:about\s+|approx\.?\s+|~\s*)?[\d.,/\u00BC-\u00BE\u2150-\u215E\s–-]+\s*(?:ml|millilit(?:er|re)s?|l|lit(?:er|re)s?|g|grams?|kg|kilograms?|oz|ounces?|fl\.?\s*oz|lbs?|pounds?|cups?|tbsps?|tablespoons?|tsps?|teaspoons?)\.?\s*\)/i;
+
 function verbatim(raw: string, note?: string): DisplayIngredient {
   const out: DisplayIngredient = { text: raw, original: raw, approximate: false, unchanged: true };
   if (note) out.note = note;
@@ -98,7 +106,8 @@ function renderAnalysis(a: LineAnalysis, factor: Rational, system: UnitSystem): 
     const style = system === 'metric' ? 'metric' : 'fraction';
     const f = formatRange(converted.quantity, style, a.sep ?? '–');
     const label = unitLabel(converted.unit, isPluralText(f.text, a.sep ?? '–'));
-    const text = `${raw.slice(0, a.qStart)}${f.text} ${label}${raw.slice(a.unitEnd)}`;
+    const tail = raw.slice(a.unitEnd).replace(EQUIVALENT_MEASURE, '');
+    const text = `${raw.slice(0, a.qStart)}${f.text} ${label}${tail}`;
     const out: DisplayIngredient = { text, original: raw, approximate: true, unchanged: false };
     if (note) out.note = note;
     return out;

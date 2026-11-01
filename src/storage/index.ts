@@ -9,7 +9,8 @@
  * intact (single transaction per operation).
  *
  * Session-only mode: when Preferences.sessionOnly is true every write except
- * setSessionOnly() (and the deleteAllData() privacy action) rejects with
+ * setSessionOnly() (and the deleteAllData() privacy action, which keeps the
+ * mode on) rejects with
  * SESSION_ONLY, and preference changes are kept in memory only for the
  * current page. The flag is read inside each write transaction, so it applies
  * across all open extension pages.
@@ -372,9 +373,17 @@ export async function countAll(): Promise<{ recipes: number; collections: number
 /**
  * Closes DB handles and deletes the whole database (R13), then resets
  * in-memory caches. Allowed in session-only mode. Afterwards preferences are
- * back to defaults (session-only off). Exported backup files are outside
- * extension control and are not affected.
+ * back to defaults, except that session-only mode stays on if it was on:
+ * deleting data must never silently re-enable persistent writes. Exported
+ * backup files are outside extension control and are not affected.
  */
 export async function deleteAllData(opts?: { timeoutMs?: number; onBlocked?: () => void }): Promise<void> {
+  let wasSessionOnly = false;
+  try {
+    wasSessionOnly = (await getPreferences()).sessionOnly;
+  } catch {
+    // Unreadable database: delete anyway.
+  }
   await deleteDatabase(opts);
+  if (wasSessionOnly) await setSessionOnly(true);
 }

@@ -279,3 +279,20 @@ describe('scaleFactorForServings', () => {
     expect(scaleFactorForServings(recipe({ text: '4 servings' }), rational(0))).toBeNull();
   });
 });
+
+describe('equivalent measures after conversion', () => {
+  const item = (raw: string) => ({ id: 'x', raw, confidence: 'high' as const });
+  it('drops the parenthetical equivalent once converted', () => {
+    const r = renderIngredient(item('1 cup (240 ml) water'), { factor: rational(1), system: 'metric' });
+    expect(r.text).toBe('235 ml water');
+    expect(r.original).toBe('1 cup (240 ml) water');
+  });
+  it('keeps non-measure parentheticals', () => {
+    const r = renderIngredient(item('1 cup (packed) brown sugar'), { factor: rational(1), system: 'metric' });
+    expect(r.text).toContain('(packed)');
+  });
+  it('keeps the equivalent when not converting', () => {
+    const r = renderIngredient(item('1 cup (240 ml) water'), { factor: rational(2), system: 'original' });
+    expect(r.text).toBe('2 cups (240 ml) water');
+  });
+});

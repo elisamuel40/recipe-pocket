@@ -40,12 +40,13 @@ describe('deleteAllData', () => {
     expect(await searchRecipes({ query: 'soup' })).toEqual([]);
   });
 
-  it('works in session-only mode and clears the flag', async () => {
+  it('works in session-only mode and keeps session-only on', async () => {
     await saveRecipe(makeRecipe());
     await setSessionOnly(true);
     await deleteAllData();
     expect((await countAll()).recipes).toBe(0);
-    expect((await getPreferences()).sessionOnly).toBe(false);
+    expect((await getPreferences()).sessionOnly).toBe(true);
+    await expect(saveRecipe(makeRecipe())).rejects.toMatchObject({ code: 'SESSION_ONLY' });
   });
 
   it('a connection that ignores versionchange blocks; rejects with BLOCKED after timeout', async () => {
