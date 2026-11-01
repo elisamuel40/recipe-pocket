@@ -218,6 +218,40 @@ export function headingStrategy(blocks: Block[], meta: PageMeta, method: Draft['
 
 const QTY_START = /^\s*(?:about\s+|approx\.?\s+|scant\s+|heaping\s+)?(?:\d|[¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞]|(?:a|one|two|three|four|five|six|eight|twelve)\s+(?:pinch|dash|handful|cups?|tablespoons?|teaspoons?|large|medium|small|whole|sticks?|cloves?|cans?|sprigs?|bunch)|pinch\b|dash\b|handful\b)/i;
 const NOTE_START = /^(notes?|tips?|do ahead|make ahead|storage|to store|variations?|substitutions?)\b\s*[:.\-–—]/i;
+/** "Label: rest" with a short, digit-free label (inline bold/underlined run-in heading). */
+const INLINE_LABEL = /^([^:\d]{2,40}):\s+(\S.*)$/u;
+/** Labels that mark a note rather than a step ("Charming tip from…", "Whole wheat variation", "Warm kitchen warning"). */
+const NOTE_LABEL = /\b(notes?|tips?|variations?|warnings?|substitutions?|swaps?|do ahead|make ahead|storage|to store|leftovers|serving suggestions?)\b/i;
+/** Run-in step labels usually start with an imperative cooking verb or "To …". */
+const STEP_LABEL_VERB = /^(to|make|bake|assemble|mix|prepare|prep|cook|roll|cut|fill|finish|form|shape|chill|rest|serve|whisk|combine|glaze|fry|boil|roast|grill|toast|divide|knead|simmer|blend|stir|season|top|cool|freeze|preheat|heat|place|add|beat|fold|pour|spread|layer|brush|sprinkle|garnish|melt|cream|line|grease|drain|soak|marinate|sear|saut[eé]|steam|bring|remove|transfer|let|start|begin|meanwhile|then|next|first|finally)\b/i;
+
+const CONTENT_CONTAINER = 'article, main, [role="main"], .entry-content, .post-content, .post-body, .post';
+
+/** Page chrome after the recipe (site footer) never holds steps. */
+function isPageChrome(el: Element | undefined): boolean {
+  return !!el?.closest('footer, [role="contentinfo"], #footer, .site-footer');
+}
+
+function inlineLabel(line: string): { label: string; rest: string } | undefined {
+  const m = INLINE_LABEL.exec(line);
+  if (!m) return undefined;
+  const label = (m[1] as string).trim();
+  if (label.split(/\s+/).length > 6) return undefined;
+  return { label, rest: m[2] as string };
+}
+
+/** A lone quantity line between ingredient groups ("1 additional large egg (to brush on pastry)"). */
+function isLoneQuantityUnit(u: Unit | undefined): boolean {
+  return !!u && u.kind === 'para' && u.lines.length === 1 && QTY_START.test(u.lines[0] as string) && (u.lines[0] as string).length <= 120;
+}
+
+/** "Alternate fillings: 9 tablespoons chocolate chips, …" — a labeled line of ingredient alternatives. */
+function labeledIngredientLine(u: Unit | undefined): { label: string; rest: string } | undefined {
+  if (!u || u.kind !== 'para' || u.lines.length !== 1) return undefined;
+  const l = inlineLabel(u.lines[0] as string);
+  if (!l || !QTY_START.test(l.rest) || l.rest.length > 300 || STEP_LABEL_VERB.test(l.label)) return undefined;
+  return l;
+}
 
 interface Unit {
   kind: 'heading' | 'list' | 'para';
@@ -225,6 +259,7 @@ interface Unit {
   text: string;
   lines: string[];
   ordered: boolean;
+  el?: Element;
 }
 
 function toUnits(blocks: Block[]): Unit[] {
@@ -238,11 +273,11 @@ function toUnits(blocks: Block[]): Unit[] {
         continue;
       }
       lastList = b.list;
-      units.push({ kind: 'list', level: 0, text: b.text, lines: [b.lines.join(' ')], ordered: !!b.ordered });
+      units.push({ kind: 'list', level: 0, text: b.text, lines: [b.lines.join(' ')], ordered: !!b.ordered, el: b.el });
       continue;
     }
     lastList = undefined;
-    units.push({ kind: b.kind, level: b.level, text: b.text, lines: [...b.lines], ordered: false });
+    units.push({ kind: b.kind, level: b.level, text: b.text, lines: [...b.lines], ordered: false, el: b.el });
   }
   return units;
 }
@@ -292,6 +327,21 @@ export function layoutStrategy(blocks: Block[], meta: PageMeta, maxCandidates: n
         j++;
         continue;
       }
+      // A lone quantity line followed by more ingredient groups belongs to the group before it.
+      const after = units[j + 1];
+      const moreFollow = !!after && (isIngredientUnit(after) || (after.kind === 'heading' && after.level >= 3 && isIngredientUnit(units[j + 2] as Unit, true)));
+      if (groups.length && !pending && isLoneQuantityUnit(u) && moreFollow) {
+        (groups[groups.length - 1] as { lines: string[] }).lines.push(u.lines[0] as string);
+        j++;
+        continue;
+      }
+      // "Alternate fillings: 9 tablespoons chocolate chips, …" right after the groups is its own group.
+      const labeled = groups.length && !pending ? labeledIngredientLine(u) : undefined;
+      if (labeled) {
+        groups.push({ title: labeled.label, lines: [labeled.rest] });
+        j++;
+        continue;
+      }
       break;
     }
     const total = groups.reduce((n, g) => n + g.lines.length, 0);
@@ -308,7 +358,8 @@ export function layoutStrategy(blocks: Block[], meta: PageMeta, maxCandidates: n
       (groups[0] as { title: string }).title = '';
       firstTitle = '';
     } else {
-      for (titleIndex = k - 1; titleIndex >= 0 && titleIndex >= k - 30; titleIndex--) {
+      const searchFrom = titleIndex;
+      for (titleIndex = searchFrom; titleIndex >= 0 && titleIndex >= searchFrom - 30; titleIndex--) {
         const u = units[titleIndex] as Unit;
         if (u.kind === 'heading' && u.level <= 6) {
           d.title = u.text;
@@ -322,9 +373,13 @@ export function layoutStrategy(blocks: Block[], meta: PageMeta, maxCandidates: n
     // Method: following paragraphs / ordered lists until a major heading or another ingredient group.
     const steps: Block[] = [];
     let stepCount = 0;
+    let inNotes = false;
+    // Steps stay inside the content container that holds the ingredients (article/main/entry).
+    const container = (units[k] as Unit).el?.closest(CONTENT_CONTAINER) ?? null;
     for (; j < units.length && stepCount < 60; j++) {
       const u = units[j] as Unit;
       if (isIngredientUnit(u)) break;
+      if (isPageChrome(u.el) || (container && u.el && !container.contains(u.el))) break;
       if (u.kind === 'heading') {
         if (u.level <= 3) break;
         if (classifyHeading(u.text) === 'notes') {
@@ -337,7 +392,15 @@ export function layoutStrategy(blocks: Block[], meta: PageMeta, maxCandidates: n
       }
       if (u.kind === 'list' && !u.ordered && stepCount === 0) continue;
       for (const l of u.lines) {
-        if (NOTE_START.test(l)) {
+        const label = inlineLabel(l);
+        if (NOTE_START.test(l) || (label && NOTE_LABEL.test(label.label))) {
+          d.notes.push(l);
+          inNotes = true;
+          continue;
+        }
+        // After the first note, run-in labeled paragraphs that are not cooking actions are notes too
+        // ("Pop Tart Minis: …", "Savory version: …").
+        if (inNotes && label && !STEP_LABEL_VERB.test(label.label)) {
           d.notes.push(l);
           continue;
         }

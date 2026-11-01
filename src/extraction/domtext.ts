@@ -90,7 +90,8 @@ interface Line {
   total: number;
 }
 
-const isBoldTag = (t: string): boolean => t === 'strong' || t === 'b' || /^h[1-6]$/.test(t);
+// Underline is included: older blogs mark recipe group headings with <u> (e.g. "<u>Pastry</u><br>").
+const isBoldTag = (t: string): boolean => t === 'strong' || t === 'b' || t === 'u' || /^h[1-6]$/.test(t);
 
 /** Collect text lines from a list of nodes (br and nested blocks break lines). */
 function textLines(nodes: Iterable<Node>, skipLists: boolean): Line[] {
@@ -132,9 +133,17 @@ function textLines(nodes: Iterable<Node>, skipLists: boolean): Line[] {
 
 const LABEL_HEADING = /^[^\d¼½¾⅓⅔⅛⅜⅝⅞]{2,60}:$/u;
 
+/** "Cinnamon Filling (enough for 9 tarts)": emphasized label followed only by a parenthetical. */
+const PAREN_SUFFIX = /^(.+?)\s*\([^()]*\)$/;
+
 function isPseudoHeading(l: Line): boolean {
   if (l.text.length > 60) return false;
   if (l.total > 0 && l.bold === l.total && !/[.!?]$/.test(l.text) && l.text.split(/\s+/).length <= 8) return true;
+  const paren = PAREN_SUFFIX.exec(l.text);
+  if (paren && l.bold > 0) {
+    const label = (paren[1] as string).replace(/\s+/g, '');
+    if (l.bold === label.length && !/\d/.test(label) && (paren[1] as string).split(/\s+/).length <= 6) return true;
+  }
   return LABEL_HEADING.test(l.text) && l.text.split(/\s+/).length <= 8;
 }
 

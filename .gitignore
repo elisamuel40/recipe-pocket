@@ -8,3 +8,5 @@ dist/
 coverage/
 site-probe-rerun.json
 release/
+# Live-site screenshots show third-party content: keep local only
+qa/screenshots/live-*.png

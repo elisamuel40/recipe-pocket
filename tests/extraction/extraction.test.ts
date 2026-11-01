@@ -185,6 +185,30 @@ describe('fallbacks', () => {
     expect(r.extraction.warnings.some((w) => /inferred from the page layout/.test(w))).toBe(true);
   });
 
+  it('reads underlined group headings, run-in step labels and trailing labeled notes (older blog layout)', () => {
+    const r = one('underline-runin-variants.html');
+    expect(r.extraction.method).toBe('dom');
+    expect(r.ingredientGroups.map((g) => g.title)).toEqual(['Crust', 'Apple Filling (fills 8 pies)', 'Cherry Filling', 'Other fillings']);
+    // Group headings are never ingredient lines; a lone quantity line stays with the group before it.
+    expect(ingredientLines(r)).not.toContain('Crust');
+    expect(r.ingredientGroups[0]?.items.map((i) => i.raw).at(-1)).toBe('1 extra egg (for the egg wash)');
+    expect(r.ingredientGroups[3]?.items.map((i) => i.raw)).toEqual([
+      '8 tablespoons fig jam, 8 tablespoons chocolate spread or 8 tablespoons of any thick preserve you like',
+    ]);
+    const s = steps(r);
+    expect(s).toHaveLength(6);
+    expect(s[0]).toMatch(/^To make apple filling: Toss/);
+    expect(s[3]).toMatch(/^Split the dough in two/);
+    expect(s[5]).toMatch(/^Bake the pies: Brush/);
+    // Tips, variations and do-ahead notes are notes, not steps.
+    expect(r.notes).toMatch(/Baker's tip: Freeze the scraps/);
+    expect(r.notes).toMatch(/Spelt Variation:/);
+    expect(r.notes).toMatch(/Mini Pies:/);
+    expect(r.notes).toMatch(/Do ahead:/);
+    // Comments, sharing widgets and footer text are excluded.
+    expect(allText(r)).not.toMatch(/Synthetic Reader|Another Reader|3 cups of jam|Share this|affiliate|First published/);
+  });
+
   it('reads schema.org microdata and ignores embedded comments', () => {
     const r = one('microdata.html');
     expect(r.extraction.method).toBe('microdata');
