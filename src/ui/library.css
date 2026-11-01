@@ -96,6 +96,44 @@
 .aisle-row input { flex: 1 1 10em; min-width: 0; }
 .copy-fallback { white-space: pre-wrap; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-3); }
 
+
+/* ---------- Kitchen notebook layer (library) ---------- */
+.library-header { background: color-mix(in srgb, var(--surface) 88%, transparent); border-bottom: 1.5px dashed var(--border); }
+.library-header .brand { font-size: 1.15rem; }
+.library-header nav a[aria-current="page"] { border-radius: 999px; padding: 0 var(--space-3); }
+
+/* Recipe cards: index cards with a tomato top rule. */
+.card-list { gap: var(--space-3); }
+.card {
+  position: relative; border: 1.5px solid var(--border); border-top: 3px solid var(--tomato); border-radius: 4px 4px 10px 10px;
+  background: var(--surface);
+  box-shadow: 0 1px 0 var(--rule), 0 8px 16px -12px rgb(60 40 20 / 0.45);
+  transform: rotate(-0.4deg); transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+.card-list > li:nth-child(even) .card, .card-list > .card:nth-child(even) { transform: rotate(0.4deg); }
+.card:hover, .card:focus-within, .card-list > li:nth-child(even) .card:hover, .card-list > .card:nth-child(even):hover { transform: rotate(0deg) translateY(-2px) scale(1.01); box-shadow: 0 2px 0 var(--rule), 0 14px 22px -14px rgb(60 40 20 / 0.55); }
+.card-title { font-family: var(--font-serif); font-size: 1.15rem; }
+a.card-title { display: inline-block; text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent); text-underline-offset: 3px; }
+
+/* Tags look like little rubber stamps. */
+.tag { border: 1.5px solid var(--tomato); color: var(--tomato); background: var(--tomato-soft); font-weight: 600; letter-spacing: 0.02em; border-radius: 4px; transform: rotate(-1deg); }
+.tag::before { color: var(--tomato); }
+
+/* Empty library: a recipe card that floats. */
+.empty-state { position: relative; border: 2px dashed var(--border); border-radius: 12px; padding-top: calc(var(--space-4) + 84px); }
+.empty-state::before {
+  content: ""; position: absolute; top: var(--space-4); left: var(--space-4); width: 92px; height: 70px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 92 70'%3E%3Crect x='3' y='3' width='86' height='64' rx='5' fill='%23FFFDF7' stroke='%23C9BFA6' stroke-width='2'/%3E%3Cpath d='M3 16 H89' stroke='%23B23A23' stroke-width='2'/%3E%3Cpath d='M12 30 H70 M12 41 H78 M12 52 H58' stroke='%23D8CFBA' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='76' cy='52' r='7' fill='none' stroke='%231F5C45' stroke-width='2'/%3E%3Cpath d='M73 52 l2 2 4 -4' fill='none' stroke='%231F5C45' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  animation: rp-float 3s ease-in-out infinite;
+}
+p.empty-state { padding-top: var(--space-4); }
+p.empty-state::before { display: none; }
+@keyframes rp-float { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-4px) rotate(-1deg); } }
+
+.aisle h2 { font-family: var(--font-serif); color: var(--accent); border-bottom: 1.5px dashed var(--border); }
+.shopping-item { border-bottom: 1px dashed var(--rule); }
+.rp-dialog { border: 1.5px solid var(--border); border-top: 3px solid var(--tomato); box-shadow: 0 20px 40px -20px rgb(40 25 10 / 0.5); }
+
 @media (max-width: 480px) {
   .library-main#main { padding: var(--space-2); }
   .shopping-item { grid-template-columns: 1fr; }
@@ -109,4 +147,5 @@
   .shopping-item { grid-template-columns: 1fr; border-color: #999; }
   .shopping-item-main input { display: inline-block !important; }
   .aisle, .shopping-item { break-inside: avoid; page-break-inside: avoid; }
+  .card, .tag { transform: none !important; box-shadow: none; background: #fff; }
 }

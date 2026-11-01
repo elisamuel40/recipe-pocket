@@ -39,6 +39,16 @@
 .rp-dialog::backdrop { background: rgb(0 0 0 / 0.45); }
 .rp-dialog-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-4); }
 
+
+/* ---------- Kitchen notebook layer (settings) ---------- */
+.settings-header { background: color-mix(in srgb, var(--surface) 88%, transparent); border-bottom: 1.5px dashed var(--border); }
+.settings-header .brand { font-size: 1.15rem; }
+.settings-section { border: 1.5px solid var(--border); border-top: 3px solid var(--accent); border-radius: 4px 4px 10px 10px; box-shadow: 0 1px 0 var(--rule), 0 8px 16px -12px rgb(60 40 20 / 0.4); }
+.settings-section > h2 { color: var(--accent); }
+.settings-toc a { border-radius: 999px; padding: 0 var(--space-3); border: 1.5px dashed var(--border); text-decoration: none; }
+.settings-toc a:hover { border-style: solid; border-color: var(--accent); }
+.rp-dialog { border: 1.5px solid var(--border); border-top: 3px solid var(--tomato); box-shadow: 0 20px 40px -20px rgb(40 25 10 / 0.5); }
+
 @media (max-width: 480px) {
   .settings-main#main { padding: var(--space-2); }
   .settings-section { padding: var(--space-3); }

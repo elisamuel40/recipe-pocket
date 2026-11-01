@@ -1,41 +1,54 @@
 /* Shared base styles for all extension pages. No remote fonts or assets. */
 :root {
+  /* Kitchen notebook: cream paper, ink green, one tomato accent. */
   --font-scale: 1;
-  --bg: #fbfaf6;
-  --surface: #ffffff;
-  --surface-2: #f1efe7;
-  --text: #1f2a26;
-  --text-muted: #5a6661;
-  --border: #d6d3c8;
-  --accent: #176347;
-  --accent-text: #ffffff;
-  --accent-soft: #e2efe8;
-  --warn: #8a5300;
-  --warn-soft: #fff3dc;
-  --danger: #a3261b;
-  --danger-soft: #fde8e6;
-  --focus: #1a5fd0;
-  --radius: 8px;
+  --bg: #FAF6EC;
+  --surface: #FFFDF7;
+  --surface-2: #F2EBDA;
+  --text: #1F2A26;
+  --text-muted: #5C5F55;
+  --border: #D8CFBA;
+  --rule: #E6DFCC;
+  --accent: #1F5C45;
+  --accent-text: #FFFDF7;
+  --accent-soft: #E3EEE6;
+  --tomato: #B23A23;
+  --tomato-soft: #FBE7DF;
+  --shadow-ink: #12352A;
+  --warn: #8A5300;
+  --warn-soft: #FBEFD3;
+  --danger: #A3261B;
+  --danger-soft: #FDE8E6;
+  --focus: #1A5FD0;
+  --radius: 10px;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 24px;
   --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* System serifs only: nothing is downloaded. */
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, "Bitstream Charter", Georgia, serif;
+  --squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3 Q4 0 8 3 T16 3' fill='none' stroke='%23B23A23' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #151a18; --surface: #1d2421; --surface-2: #26302c; --text: #e7ece9; --text-muted: #a7b3ae;
-    --border: #3a4641; --accent: #6cc59d; --accent-text: #0d1b15; --accent-soft: #1f3a2f;
-    --warn: #f0b75c; --warn-soft: #3a2c12; --danger: #ff8a7f; --danger-soft: #3d1c19; --focus: #8ab4ff;
+    --bg: #1C1917; --surface: #262220; --surface-2: #302A26; --text: #EDE7DD; --text-muted: #B5ADA0;
+    --border: #4A423B; --rule: #3A332D; --accent: #7CC8A2; --accent-text: #10201A; --accent-soft: #23362C;
+    --tomato: #F08A6C; --tomato-soft: #3A2620; --shadow-ink: #0B0A09;
+    --warn: #F0B75C; --warn-soft: #3A2C12; --danger: #FF8A7F; --danger-soft: #3D1C19; --focus: #8AB4FF;
+    --squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3 Q4 0 8 3 T16 3' fill='none' stroke='%23F08A6C' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #151a18; --surface: #1d2421; --surface-2: #26302c; --text: #e7ece9; --text-muted: #a7b3ae;
-  --border: #3a4641; --accent: #6cc59d; --accent-text: #0d1b15; --accent-soft: #1f3a2f;
-  --warn: #f0b75c; --warn-soft: #3a2c12; --danger: #ff8a7f; --danger-soft: #3d1c19; --focus: #8ab4ff;
+  --bg: #1C1917; --surface: #262220; --surface-2: #302A26; --text: #EDE7DD; --text-muted: #B5ADA0;
+  --border: #4A423B; --rule: #3A332D; --accent: #7CC8A2; --accent-text: #10201A; --accent-soft: #23362C;
+  --tomato: #F08A6C; --tomato-soft: #3A2620; --shadow-ink: #0B0A09;
+  --warn: #F0B75C; --warn-soft: #3A2C12; --danger: #FF8A7F; --danger-soft: #3D1C19; --focus: #8AB4FF;
+  --squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3 Q4 0 8 3 T16 3' fill='none' stroke='%23F08A6C' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
   color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -170,6 +183,89 @@ legend { font-weight: 600; padding: 0 var(--space-1); }
 .print-attribution p { margin: 0 0 var(--space-1); }
 .print-url { overflow-wrap: anywhere; }
 
+
+/* =====================================================================
+   Kitchen notebook layer: texture, tactile buttons, hand-made details.
+   Appearance only; every selector above keeps its meaning.
+   ===================================================================== */
+body { position: relative; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at 15% 0%, rgb(178 58 35 / 0.06), transparent 55%),
+    radial-gradient(ellipse at 90% 10%, rgb(31 92 69 / 0.06), transparent 50%), var(--grain);
+}
+h1, h2, .recipe-title, .cook-title, .app-name, .brand, .empty-state h2 { font-family: var(--font-serif); letter-spacing: -0.01em; }
+h1 { font-weight: 700; }
+h2 { font-weight: 600; }
+
+/* Buttons: ink stamp that presses down. */
+button {
+  border: 1.5px solid var(--border); background: var(--surface); box-shadow: 0 2px 0 var(--border);
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out, background-color 150ms ease-out;
+}
+button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 3px 0 var(--border); }
+button:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 0 0 var(--border); transition-duration: 100ms; }
+button.primary { box-shadow: 0 2px 0 var(--shadow-ink); font-weight: 600; }
+button.primary:hover:not(:disabled) { box-shadow: 0 3px 0 var(--shadow-ink); }
+button.primary:active:not(:disabled) { box-shadow: 0 0 0 var(--shadow-ink); }
+button.danger { box-shadow: 0 2px 0 var(--danger-soft); }
+button:disabled { box-shadow: none; }
+.link-button, .cook-step-button { box-shadow: none; }
+.link-button:hover:not(:disabled), .link-button:active:not(:disabled), .cook-step-button:hover:not(:disabled), .cook-step-button:active:not(:disabled) { transform: none; box-shadow: none; }
+input, select, textarea { border-width: 1.5px; background: var(--surface); }
+
+/* Chips: pills; the chosen one pops. */
+.chip { border-radius: 999px; }
+.chip[aria-pressed="true"] { box-shadow: 0 2px 0 var(--shadow-ink); animation: rp-pop 160ms ease-out; }
+@keyframes rp-pop { 0% { transform: scale(0.94); } 70% { transform: scale(1.04); } 100% { transform: scale(1); } }
+
+/* App bar: serif name with a small tomato flower. */
+.app-bar { background: color-mix(in srgb, var(--surface) 88%, transparent); border-bottom: 1.5px dashed var(--border); }
+.app-name { font-size: 1.1rem; }
+.app-name::after, .brand::after { content: "✿"; margin-left: 0.3em; color: var(--tomato); font-size: 0.85em; display: inline-block; transition: transform 300ms ease-out; }
+.app-bar:hover .app-name::after, .library-header:hover .brand::after, .settings-header:hover .brand::after { transform: rotate(72deg); }
+
+/* Recipe title with a hand-drawn tomato squiggle. */
+.recipe-title { font-size: 1.55rem; line-height: 1.2; padding-bottom: 10px; background: var(--squiggle) left bottom / 16px 6px repeat-x; background-size: 16px 6px; display: inline-block; max-width: 100%; }
+.section-head h2, .recipe-section > h2 { color: var(--accent); }
+
+/* Ingredients on ruled paper. */
+.ingredient-list { padding-left: 1.3em; }
+.ingredient { padding: var(--space-1) 0; margin: 0; border-bottom: 1px dashed var(--rule); }
+.ingredient::marker { color: var(--tomato); }
+.group-title { font-family: var(--font-serif); font-style: italic; color: var(--accent); }
+
+/* Steps: numbers in ink circles. */
+.step-list { list-style: none; padding-left: 0; counter-reset: rp-step; }
+.step-list > .step { counter-increment: rp-step; position: relative; padding-left: 2.4em; min-height: 1.8em; }
+.step-list > .step::before {
+  content: counter(rp-step); position: absolute; left: 0; top: 0.05em; width: 1.75em; height: 1.75em; border-radius: 50%;
+  display: grid; place-items: center; background: var(--accent); color: var(--accent-text); font: 700 0.85rem/1 var(--font-serif);
+}
+
+/* Cards and notices: index cards and masking tape. */
+.panel-card, .scale-controls { border: 1.5px solid var(--border); box-shadow: 0 1px 0 var(--rule), 0 6px 14px -10px rgb(60 40 20 / 0.35); }
+.scale-controls { background: var(--surface); }
+.notice { border-radius: 4px 14px 6px 12px; }
+.notice.warn, .notice.error, .notice.success { border-left-width: 6px; }
+.preview-list li { border-left: 3px solid var(--tomato); }
+
+/* Loading: a wooden spoon that stirs. */
+.state.loading::before {
+  content: ""; width: 44px; height: 44px; margin-bottom: var(--space-2);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cellipse cx='16' cy='14' rx='8' ry='11' transform='rotate(-35 16 14)' fill='%23C98B4F' stroke='%237A4B22' stroke-width='2'/%3E%3Cpath d='M21 21 L40 42' stroke='%237A4B22' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M21 21 L40 42' stroke='%23C98B4F' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform-origin: 80% 85%; animation: rp-stir 1.6s ease-in-out infinite;
+}
+@keyframes rp-stir { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+
+/* Cook mode stays calm: no texture, bigger ink. */
+.cook-current { border-width: 2px; box-shadow: 0 3px 0 var(--accent); }
+.cook-step-list li.current .cook-step-button { border-radius: 8px; }
+
+/* Notes read like margin notes. */
+.notes { border-top: 1.5px dashed var(--border); padding-top: var(--space-3); }
+.note-heading strong { font-family: var(--font-serif); color: var(--accent); }
+
 @media (max-width: 360px) {
   #main { padding: var(--space-2); }
   .scale-controls { padding: var(--space-2); }
@@ -184,6 +280,11 @@ legend { font-weight: 600; padding: 0 var(--space-1); }
   }
   html { font-size: 11pt; }
   body { background: #fff; color: #000; }
+  body::before { display: none; }
+  .recipe-title { background: none; padding-bottom: 0; }
+  .step-list > .step::before { background: none; color: #000; border: 1px solid #000; }
+  .ingredient { border-bottom: none; }
+  .panel-card, .scale-controls, .cook-current { box-shadow: none; }
   .no-print, .print-controls, .app-bar, .action-bar, .scale-controls, .link-button, .notice-host, .action-area, button { display: none !important; }
   #main, .print-page #main { max-width: none; padding: 0; margin: 0; }
   a { color: #000; text-decoration: none; }

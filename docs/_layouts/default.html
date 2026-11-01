@@ -1,2 +1,97 @@
 <!doctype html>
-<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ page.title | default: site.title | escape }}</title><style>body{max-width:48rem;margin:3rem auto;padding:0 1.25rem;font:18px/1.65 system-ui;color:#20302b;background:#fafaf6}a{color:#176347}h1,h2{line-height:1.2}nav{border-bottom:1px solid #ccc;padding-bottom:1rem}main{margin-top:2rem}</style><nav><a href="{{ '/' | relative_url }}">Recipe Pocket</a></nav><main>{{ content }}</main></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ page.title | default: site.title | escape }}{% if page.title and page.title != site.title %} · Recipe Pocket{% endif %}</title>
+<meta name="description" content="{{ site.description | escape }}">
+<meta name="color-scheme" content="light dark">
+<style>
+/* Kitchen notebook. System fonts only, no external requests. */
+:root{
+  --paper:#FAF6EC;--card:#FFFDF7;--ink:#1F2A26;--muted:#5C5F55;--rule:#E6DFCC;--line:#D8CFBA;
+  --green:#1F5C45;--green-ink:#12352A;--on-green:#FFFDF7;--tomato:#B23A23;--tomato-soft:#FBE7DF;--focus:#1A5FD0;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Charter,"Bitstream Charter",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --squiggle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3 Q4 0 8 3 T16 3' fill='none' stroke='%23B23A23' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --grain:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#1C1917;--card:#262220;--ink:#EDE7DD;--muted:#B5ADA0;--rule:#3A332D;--line:#4A423B;
+  --green:#7CC8A2;--green-ink:#0B0A09;--on-green:#10201A;--tomato:#F08A6C;--tomato-soft:#3A2620;--focus:#8AB4FF;
+  --squiggle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3 Q4 0 8 3 T16 3' fill='none' stroke='%23F08A6C' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);font:18px/1.65 var(--sans);background:
+  radial-gradient(ellipse at 10% -5%,rgb(178 58 35/.09),transparent 50%),
+  radial-gradient(ellipse at 95% 0%,rgb(31 92 69/.09),transparent 45%),var(--grain),var(--paper);min-height:100vh}
+a{color:var(--green);text-underline-offset:3px}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+.wrap{max-width:46rem;margin:0 auto;padding:0 16px}
+header.site{padding:20px 0 0}
+header.site .wrap{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.logo{font:700 1.25rem/1 var(--serif);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:.35em}
+.logo span{color:var(--tomato);display:inline-block;transition:transform .3s ease-out}
+.logo:hover span{transform:rotate(72deg)}
+nav.tabs{display:flex;flex-wrap:wrap;gap:6px}
+nav.tabs a{font-size:.9rem;text-decoration:none;color:var(--ink);padding:4px 12px;border:1.5px dashed var(--line);border-radius:999px;transition:border-color .15s,background-color .15s}
+nav.tabs a:hover{border-style:solid;border-color:var(--green)}
+nav.tabs a[aria-current=page]{background:var(--green);color:var(--on-green);border:1.5px solid var(--green)}
+main{padding:28px 0 48px}
+main>.wrap>*:first-child{margin-top:0}
+h1,h2,h3{font-family:var(--serif);line-height:1.2;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,6vw,3rem);margin:.2em 0 .5em;display:inline-block;padding-bottom:12px;background:var(--squiggle) left bottom/16px 6px repeat-x}
+h2{font-size:1.45rem;color:var(--green);margin-top:2em}
+h3{font-size:1.1rem}
+code{font-size:.88em;background:var(--card);border:1px solid var(--rule);border-radius:5px;padding:.05em .35em}
+pre code{display:block;padding:12px;overflow-x:auto}
+ol,ul{padding-left:1.4em}
+li{margin:.3em 0}
+li::marker{color:var(--tomato)}
+blockquote{margin:1.2em 0;padding:12px 16px;background:var(--card);border-left:5px solid var(--tomato);border-radius:4px 12px 6px 10px}
+table{border-collapse:collapse;width:100%;font-size:.95rem;display:block;overflow-x:auto}
+th,td{border-bottom:1px dashed var(--line);padding:6px 8px;text-align:left}
+hr{border:0;border-top:1.5px dashed var(--line);margin:2em 0}
+.btn{display:inline-block;font-weight:600;text-decoration:none;padding:10px 18px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);box-shadow:0 2px 0 var(--line);transition:transform .15s ease-out,box-shadow .15s ease-out}
+.btn:hover{transform:translateY(-1px);box-shadow:0 3px 0 var(--line)}
+.btn:active{transform:translateY(2px);box-shadow:0 0 0 var(--line);transition-duration:.1s}
+.btn.primary{background:var(--green);color:var(--on-green);border-color:var(--green);box-shadow:0 2px 0 var(--green-ink)}
+.btn.primary:hover{box-shadow:0 3px 0 var(--green-ink)}
+.btn.primary:active{box-shadow:0 0 0 var(--green-ink)}
+.stamp{display:inline-block;font:700 .78rem/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--tomato);border:2px solid var(--tomato);background:var(--tomato-soft);padding:6px 9px;border-radius:4px;transform:rotate(-2deg)}
+footer.site{border-top:1.5px dashed var(--line);padding:20px 0 32px;font-size:.88rem;color:var(--muted)}
+footer.site a{color:var(--muted)}
+/* Home */
+.hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
+@media (min-width:700px){.hero{grid-template-columns:1.25fr 1fr}}
+.hero p.lede{font-size:1.15rem;margin:.2em 0 1em}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
+.hero-card{width:100%;max-width:320px;justify-self:center;animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(-1deg)}}
+.promises{list-style:none;padding:0;margin:28px 0;background:var(--card);border:1.5px solid var(--line);border-top:3px solid var(--tomato);border-radius:4px 4px 12px 12px;box-shadow:0 10px 20px -16px rgb(60 40 20/.5)}
+.promises li{margin:0;padding:12px 16px 12px 48px;border-bottom:1px dashed var(--rule);position:relative}
+.promises li:last-child{border-bottom:0}
+.promises li::before{content:"✓";position:absolute;left:16px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--green);color:var(--on-green);font:700 .8rem/22px var(--sans);text-align:center}
+.promises strong{font-family:var(--serif)}
+.small{font-size:.9rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="logo" href="{{ '/' | relative_url }}">Recipe Pocket <span aria-hidden="true">✿</span></a>
+  <nav class="tabs" aria-label="Site">
+    <a href="{{ '/install.html' | relative_url }}"{% if page.url == '/install.html' %} aria-current="page"{% endif %}>Install</a>
+    <a href="{{ '/privacy.html' | relative_url }}"{% if page.url == '/privacy.html' %} aria-current="page"{% endif %}>Privacy</a>
+    <a href="{{ '/video-gate.html' | relative_url }}"{% if page.url == '/video-gate.html' %} aria-current="page"{% endif %}>Video status</a>
+    <a href="https://github.com/elisamuel40/recipe-pocket">Source</a>
+  </nav>
+</div></header>
+<main><div class="wrap">{{ content }}</div></main>
+<footer class="site"><div class="wrap">
+  Open source (MIT). No account, no analytics, no tracking. This page loads no third-party scripts or fonts.
+  · <a href="{{ '/terms.html' | relative_url }}">Usage notice</a> · <a href="{{ '/privacy.html' | relative_url }}">Privacy</a>
+</div></footer>
+</body>
+</html>
