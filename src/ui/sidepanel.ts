@@ -1,5 +1,28 @@
-// Placeholder (Integrator skeleton). Replaced by the UI owner.
-import { h } from '../shared/dom';
-const app = document.getElementById('app')!;
-app.appendChild(h('h1', {}, 'Recipe Pocket'));
-app.appendChild(h('p', {}, 'Reads this page when you ask. Saves only on this device.'));
+/** Side panel entry: wires chrome.* into the reader controller. */
+import { isTrustedSender } from '../shared/messages';
+import { loadAndApplyPreferences } from './common/prefs';
+import { mountReaderPanel, type PanelEnv } from './components/reader-panel';
+
+const env: PanelEnv = {
+  getWindowId: async () => (await chrome.windows.getCurrent()).id,
+  getActiveTab: async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    return tab ? { id: tab.id, url: tab.url } : undefined;
+  },
+  sendExtract: (req) => chrome.runtime.sendMessage(req),
+  openPage: (path) => void chrome.tabs.create({ url: chrome.runtime.getURL(path) }),
+  openOptions: () => void chrome.runtime.openOptionsPage(),
+  onMessage: (cb) => chrome.runtime.onMessage.addListener(cb),
+  onTabActivated: (cb) => chrome.tabs.onActivated.addListener(cb),
+  onTabUpdated: (cb) => chrome.tabs.onUpdated.addListener((tabId, change) => cb(tabId, change)),
+  isTrustedSender,
+  isPrintPageSender: (sender) =>
+    isTrustedSender(sender) && typeof sender.url === 'string' && sender.url.startsWith(chrome.runtime.getURL('ui/print.html')),
+};
+
+void (async () => {
+  const root = document.getElementById('app');
+  if (!root) return;
+  const prefs = await loadAndApplyPreferences();
+  await mountReaderPanel(root, env, prefs);
+})();

@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><title>Layered Pie</title>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+  {"@type":"WebPage","@id":"https://pies.example/layered/#webpage","mainEntity":{"@id":"https://pies.example/layered/#recipe"}},
+  {"@type":"Person","@id":"https://pies.example/#author","name":"Pat Baker","knows":{"@id":"https://pies.example/layered/#recipe"},"sameAs":{"@id":"https://pies.example/#author"}},
+  {"@type":["Recipe","NewsArticle"],"@id":"https://pies.example/layered/#recipe","name":"Layered Apple Pie",
+   "isPartOf":{"@id":"https://pies.example/layered/#recipe"},
+   "author":{"@id":"https://pies.example/#author"},
+   "recipeYield":"8 slices","totalTime":"PT2H15M",
+   "recipeIngredient":["For the crust:","2 ½ cups flour","1 cup cold butter","For the filling:","6 apples, sliced","¾ cup sugar"],
+   "recipeInstructions":[
+     {"@type":"HowToSection","name":"Crust","itemListElement":[
+       {"@type":"HowToStep","position":2,"text":"Chill the dough for 1 hour."},
+       {"@type":"HowToStep","position":1,"text":"Cut the butter into the flour."}
+     ]},
+     {"@type":"HowToSection","name":"Filling","itemListElement":[
+       {"@type":"HowToStep","text":"Toss apples with sugar."},
+       {"@type":"HowToSection","name":"Assembly","itemListElement":[
+         {"@type":"HowToStep","name":"Fill","text":"Fill the crust and bake at 375°F for 50 minutes."}
+       ]}
+     ]}
+   ]}
+]}
+</script></head>
+<body><h1>Layered Apple Pie</h1></body></html>
