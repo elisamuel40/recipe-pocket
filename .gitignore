@@ -3,3 +3,8 @@ node_modules/
 dist/
 *.local
 .DS_Store
+**/CLAUDE.md
+!/CLAUDE.md
+coverage/
+site-probe-rerun.json
+release/
