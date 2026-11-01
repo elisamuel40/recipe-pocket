@@ -1,0 +1,2 @@
+# Contributing
+Use original code and synthetic fixtures. Link the requirement addressed and report tests run. Preserve local-only operation; no telemetry or remote dependencies at runtime. Include dependency/model licenses and provenance. Do not submit scraped recipe corpora, user backups or private data. File compatibility issues with a public URL and minimal description only. Contributors retain copyright in their contributions and license them under MIT.

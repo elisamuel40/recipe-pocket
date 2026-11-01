@@ -1,0 +1,140 @@
+[
+  {
+    "url": "https://smittenkitchen.com/2010/04/homemade-pop-tarts/",
+    "http": 200,
+    "sha256": "c1cbb48d0b2ca3e0363f489cc0634c9a93383aeb63ac522f8778f8be5c7bb250",
+    "recipeCount": 0,
+    "candidates": [],
+    "result": "fallback_required"
+  },
+  {
+    "url": "https://www.joshuaweissman.com/recipes/the-best-chocolate-chips-cookies-recipe-ever",
+    "http": 200,
+    "sha256": "7222902f70ca3d61e715df5f0bcbc3e5a1e48d81d1d830a3484df06cff807f55",
+    "recipeCount": 1,
+    "candidates": [
+      {
+        "title": "The Best Chocolate Chip Cookies Ever",
+        "ingredientCount": 0,
+        "hasInstructions": false
+      }
+    ],
+    "result": "incomplete_schema_fallback_required"
+  },
+  {
+    "url": "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/",
+    "http": 403,
+    "sha256": "34d3f16c8c143867bbaba0585ec6265e00ce7ce8a2ed6d2062b21cd0ae0382db",
+    "recipeCount": 0,
+    "candidates": [],
+    "result": "blocked"
+  },
+  {
+    "url": "https://www.simplyrecipes.com/recipes/banana_bread/",
+    "http": 403,
+    "sha256": "2b0945b1d06b8f31483870cda813a3d08d2b5e3685aad993a9a70905d121973e",
+    "recipeCount": 0,
+    "candidates": [],
+    "result": "blocked"
+  },
+  {
+    "url": "https://www.seriouseats.com/the-food-lab-best-chocolate-chip-cookie-recipe",
+    "http": 403,
+    "sha256": "3d55cc3fa417ae8ea156ea6e3e69fef4a7579de7756e3d3b2ec62f826db7bb0d",
+    "recipeCount": 0,
+    "candidates": [],
+    "result": "blocked"
+  },
+  {
+    "url": "https://www.bbcgoodfood.com/recipes/easy-pancakes",
+    "http": 200,
+    "sha256": "217be671bf36986b0c113d5853020ca7a9cffd173bea39b6df594c9133949793",
+    "recipeCount": 1,
+    "candidates": [
+      {
+        "title": "Easy pancakes",
+        "ingredientCount": 6,
+        "hasInstructions": true
+      }
+    ],
+    "result": "candidate_found"
+  },
+  {
+    "url": "https://www.budgetbytes.com/creamy-tomato-spinach-pasta/",
+    "http": 200,
+    "sha256": "4c48f5fd75379c56f0f2d37810154c589d436f005b4edbd860cf03a50e80802a",
+    "recipeCount": 1,
+    "candidates": [
+      {
+        "title": "Creamy Tomato and Spinach Pasta",
+        "ingredientCount": 15,
+        "hasInstructions": true
+      }
+    ],
+    "result": "candidate_found"
+  },
+  {
+    "url": "https://www.recipetineats.com/spaghetti-bolognese/",
+    "http": 200,
+    "sha256": "beb832a2031789616abfbc0deb2a40a38733fcdc2a623384758aded511853a4d",
+    "recipeCount": 1,
+    "candidates": [
+      {
+        "title": "Spaghetti Bolognese",
+        "ingredientCount": 16,
+        "hasInstructions": true
+      }
+    ],
+    "result": "candidate_found"
+  },
+  {
+    "url": "https://www.loveandlemons.com/banana-bread/",
+    "http": 200,
+    "sha256": "da6e358745e19f116f2d9b273242c7d9fa171029d02e9abd769ee762cd224a48",
+    "recipeCount": 1,
+    "candidates": [
+      {
+        "title": "Banana Bread",
+        "ingredientCount": 11,
+        "hasInstructions": true
+      }
+    ],
+    "result": "candidate_found"
+  },
+  {
+    "url": "https://cookieandkate.com/best-lentil-soup-recipe/",
+    "http": 200,
+    "sha256": "351acff3985a707d8e87e3c8660cd8109192b5b7d9ea5ae64b041c001aa07bfa",
+    "recipeCount": 1,
+    "candidates": [
+      {
+        "title": "Best Lentil Soup",
+        "ingredientCount": 16,
+        "hasInstructions": true
+      }
+    ],
+    "result": "candidate_found"
+  },
+  {
+    "url": "https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/",
+    "http": 200,
+    "sha256": "6f7ffeab4fd65fc233015de8706ea96c3d47a2ad74aab76d2f94873665e93a15",
+    "recipeCount": 1,
+    "candidates": [
+      {
+        "title": "Chewy Chocolate Chip Cookies",
+        "ingredientCount": 10,
+        "hasInstructions": true
+      }
+    ],
+    "result": "candidate_found"
+  },
+  {
+    "url": "https://www.kingarthurbaking.com/recipes/king-arthurs-original-cake-pan-cake-recipe",
+    "http": 406,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "recipeCount": 0,
+    "candidates": [],
+    "result": "blocked"
+  }
+]
