@@ -2,7 +2,7 @@
 The user requested free GitHub Pages hosting and open source. Product remains a Chrome extension. Pages serves documentation and policies only; it cannot run privileged extension APIs or install the extension automatically.
 
 ## Prepared configuration
-Public repository; MIT license for original project code/docs; docs/ as Jekyll source. GitHub Pages deployment workflow is supplied. No custom domain needed, no paid services, no backend. Default URL after publication: https://OWNER.github.io/REPOSITORY/. Replace OWNER/REPOSITORY in public pages before release. No repository was created or deployed by this handoff because no destination/account was specified.
+Public repository; MIT license for original project code/docs; docs/ as Jekyll source. GitHub Pages deployment workflow is supplied. No custom domain needed, no paid services, no backend. Repository: https://github.com/elisamuel40/recipe-pocket (owner: Eli S Sanchez). Docs site: https://elisamuel40.github.io/recipe-pocket/.
 
 1. Choose repository owner/name, working product name, copyright owner and public contact. Replace all bracketed placeholders.
 2. Initialize public repo with this package; add extension source only after implementation. Keep scratch HTML and user data out of git.

@@ -3,7 +3,7 @@ layout: default
 title: Privacy
 ---
 # Recipe Pocket privacy policy
-DRAFT — publish as effective only after implementation audit. Effective date: [RELEASE DATE]. Publisher: [OWNER NAME]. Privacy contact: [PUBLIC CONTACT METHOD].
+DRAFT — publish as effective only after implementation audit. Effective date: [RELEASE DATE]. Publisher: Eli S Sanchez. Privacy contact: [PUBLIC CONTACT METHOD].
 
 Recipe Pocket is designed to work on your device. We do not receive, collect, sell or retain your recipe content, browsing history, usage statistics, identifiers, analytics or crash reports. The extension has no account system, analytics service, advertising SDK or developer backend.
 
