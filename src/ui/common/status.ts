@@ -28,7 +28,7 @@ export function createAnnouncer(region: HTMLElement): (text: string) => void {
     clear(region);
     if (timer) clearTimeout(timer);
     // A short delay makes repeated identical messages announce again.
-    timer = setTimeout(() => region.appendChild(document.createTextNode(text)), 30);
+    timer = setTimeout(() => region.appendChild(region.ownerDocument.createTextNode(text)), 30);
   };
 }
 
