@@ -39,7 +39,7 @@ Each module exposes a public API in its `index.ts`; contracts live in `src/share
 - Every task reports changed files, tests run, results, limitations and next dependency (`AGENTS.md`).
 
 ## Release placeholders
-Repository: https://github.com/elisamuel40/recipe-pocket (public; Pages at https://elisamuel40.github.io/recipe-pocket/). Owner and publisher: Eli S Sanchez. `[RELEASE DATE]` and `[PUBLIC CONTACT METHOD]` in `docs/privacy.md` still block a Chrome Web Store release. Do not publish to GitHub or the Chrome Web Store without explicit authorization.
+Repository: https://github.com/elisamuel40/recipe-pocket (public; Pages at https://elisamuel40.github.io/recipe-pocket/). Owner and publisher: Eli S Sanchez. Chrome Web Store submission materials and the remaining steps are in `store/` (`npm run store:assets` regenerates the images from the real build). Paste the store link into `chrome_store_url` in `docs/_config.yml` after approval. Do not publish to GitHub or the Chrome Web Store without explicit authorization.
 
 
 <claude-mem-context>

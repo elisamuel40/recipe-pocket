@@ -1,3 +1,7 @@
 title: Recipe Pocket
-description: An open-source, local-only Chrome recipe extension
+description: A Chrome extension that pulls the recipe out of any page, then scales, converts, prints and saves it on your computer.
+url: https://elisamuel40.github.io
+baseurl: /recipe-pocket
 markdown: kramdown
+# Paste the Chrome Web Store link here after approval. The site then shows "Add to Chrome" and hides the developer-mode steps.
+chrome_store_url: ""

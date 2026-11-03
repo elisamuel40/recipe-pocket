@@ -3,7 +3,7 @@ layout: default
 title: Privacy
 ---
 # Recipe Pocket privacy policy
-DRAFT — publish as effective only after implementation audit. Effective date: [RELEASE DATE]. Publisher: Eli S Sanchez. Privacy contact: [PUBLIC CONTACT METHOD].
+Effective date: November 3, 2026. Publisher: Eli S Sanchez. Privacy contact: [GitHub Issues](https://github.com/elisamuel40/recipe-pocket/issues).
 
 Recipe Pocket is designed to work on your device. We do not receive, collect, sell or retain your recipe content, browsing history, usage statistics, identifiers, analytics or crash reports. The extension has no account system, analytics service, advertising SDK or developer backend.
 
@@ -16,5 +16,7 @@ You can delete individual records or use Delete all local data. Uninstalling nor
 Original recipe websites have their own privacy practices. Opening a source link visits that website. Chrome and the Chrome Web Store may process information under Google's policies, independently of this extension. Our public documentation is hosted on GitHub Pages, which logs and stores visitors' IP addresses for security purposes under GitHub's privacy statement; no analytics scripts are added by this project.
 
 Support is optional. If you post a GitHub issue, that information may be public and retained by GitHub. Do not include private recipes, browsing history or personal information. The extension sends no automatic support reports. We do not promise that third-party hosting or support services retain no information.
+
+The use of information received by Recipe Pocket adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), including the Limited Use requirements. The extension handles website content only to show the recipe you selected and to store what you choose to save. It does not sell or transfer that data, and does not use it for unrelated purposes or to determine creditworthiness or for lending.
 
 Changes to this policy will appear with extension releases and in the public repository. No data collection will be introduced silently. This policy must describe the shipped software; any future change requires a new review and disclosure.

@@ -220,7 +220,7 @@ input, select, textarea { border-width: 1.5px; background: var(--surface); }
 @keyframes rp-pop { 0% { transform: scale(0.94); } 70% { transform: scale(1.04); } 100% { transform: scale(1); } }
 
 /* App bar: serif name with a small tomato flower. */
-.app-bar { background: color-mix(in srgb, var(--surface) 88%, transparent); border-bottom: 1.5px dashed var(--border); }
+.app-bar { background: var(--surface); border-bottom: 1.5px dashed var(--border); }
 .app-name { font-size: 1.1rem; }
 .app-name::after, .brand::after { content: "✿"; margin-left: 0.3em; color: var(--tomato); font-size: 0.85em; display: inline-block; transition: transform 300ms ease-out; }
 .app-bar:hover .app-name::after, .library-header:hover .brand::after, .settings-header:hover .brand::after { transform: rotate(72deg); }

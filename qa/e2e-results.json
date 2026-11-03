@@ -1,9 +1,9 @@
 {
   "meta": {
-    "date": "2026-11-01T16:06:27.313Z",
+    "date": "2026-11-03T01:27:59.468Z",
     "chromium": "Chrome/153.0.8010.12",
     "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
-    "commit": "0ceddfe (+uncommitted src changes)",
+    "commit": "399dc11 (+uncommitted src changes)",
     "extensionId": "gdggjmbakokgbpdhoifmdcblinapcppk",
     "dist": "/Users/eli/Projects/KwikRecipes/recipe-extension-spec/dist"
   },
@@ -15,7 +15,7 @@
       "expected": "MV3 SW running; permissions = activeTab, scripting, sidePanel; no host_permissions",
       "actual": "SW chrome-extension://gdggjmbakokgbpdhoifmdcblinapcppk/background.js; permissions activeTab, scripting, sidePanel; host_permissions none",
       "evidence": [],
-      "ms": 7
+      "ms": 8
     },
     {
       "id": "panel.onboarding",
@@ -26,7 +26,7 @@
       "evidence": [
         "qa/screenshots/01-onboarding.png"
       ],
-      "ms": 521
+      "ms": 611
     },
     {
       "id": "extract.jsonld-complete",
@@ -37,7 +37,7 @@
       "evidence": [
         "qa/screenshots/02-jsonld-complete.png"
       ],
-      "ms": 508
+      "ms": 496
     },
     {
       "id": "scale.servings",
@@ -48,7 +48,7 @@
       "evidence": [
         "qa/screenshots/03-scaled-2x.png"
       ],
-      "ms": 410
+      "ms": 411
     },
     {
       "id": "units.switch",
@@ -59,7 +59,7 @@
       "evidence": [
         "qa/screenshots/04-metric.png"
       ],
-      "ms": 403
+      "ms": 388
     },
     {
       "id": "save.first",
@@ -68,7 +68,7 @@
       "expected": "Button becomes \"✓ Saved\" and \"Saved on this device.\" notice",
       "actual": "buttons=Library|Settings|−|+|Reset|✓ Saved|Print; notices=✓Done: Saved on this device.Open in library",
       "evidence": [],
-      "ms": 104
+      "ms": 103
     },
     {
       "id": "save.duplicate",
@@ -79,18 +79,18 @@
       "evidence": [
         "qa/screenshots/05-duplicate.png"
       ],
-      "ms": 454
+      "ms": 473
     },
     {
       "id": "print.draft",
       "name": "Print view from unsaved draft (print.html via side panel draft)",
       "status": "pass",
       "expected": "Print page shows the draft, scaled to 8 servings",
-      "actual": "/ui/print.html?id=5b43e70d-ff93-4c39-97da-edf4b54e7fc7 h1=Weeknight Lemon Rice; contains \"3 cups\"=true",
+      "actual": "/ui/print.html?id=1e680f32-c17e-4dbf-9e42-62f6f0d5df01 h1=Weeknight Lemon Rice; contains \"3 cups\"=true",
       "evidence": [
         "qa/screenshots/06-print-draft.png"
       ],
-      "ms": 568
+      "ms": 554
     },
     {
       "id": "list.add",
@@ -99,7 +99,7 @@
       "expected": "Notice \"Added 4 ingredients to “Shopping list”\"",
       "actual": "✓Done: Added 4 ingredients to “Shopping list”.Open shopping lists (form buttons: Library|Settings|−|+|Reset|Save|Print|Add to shopping list|Cook mode|Edit|Library|Add ingredients|Cancel)",
       "evidence": [],
-      "ms": 6
+      "ms": 7
     },
     {
       "id": "extract.multiple",
@@ -110,7 +110,7 @@
       "evidence": [
         "qa/screenshots/07-multiple-picker.png"
       ],
-      "ms": 594
+      "ms": 601
     },
     {
       "id": "extract.dom-fallback",
@@ -121,7 +121,7 @@
       "evidence": [
         "qa/screenshots/08-dom-fallback.png"
       ],
-      "ms": 650
+      "ms": 640
     },
     {
       "id": "extract.variants",
@@ -132,7 +132,7 @@
       "evidence": [
         "qa/screenshots/09-variants.png"
       ],
-      "ms": 660
+      "ms": 662
     },
     {
       "id": "extract.underline-runin",
@@ -143,7 +143,7 @@
       "evidence": [
         "qa/screenshots/09b-underline-runin.png"
       ],
-      "ms": 664
+      "ms": 629
     },
     {
       "id": "extract.no-recipe",
@@ -154,7 +154,7 @@
       "evidence": [
         "qa/screenshots/10-no-recipe.png"
       ],
-      "ms": 614
+      "ms": 610
     },
     {
       "id": "extract.restricted.chrome://version",
@@ -165,7 +165,7 @@
       "evidence": [
         "qa/screenshots/11-restricted.png"
       ],
-      "ms": 519
+      "ms": 529
     },
     {
       "id": "extract.restricted.about:blank",
@@ -174,7 +174,7 @@
       "expected": "\"This page can’t be read\" (RESTRICTED_PAGE)",
       "actual": "h1=This page can’t be read",
       "evidence": [],
-      "ms": 141
+      "ms": 140
     },
     {
       "id": "library.list",
@@ -185,7 +185,7 @@
       "evidence": [
         "qa/screenshots/12-library.png"
       ],
-      "ms": 226
+      "ms": 216
     },
     {
       "id": "library.search",
@@ -194,18 +194,18 @@
       "expected": "\"lemon\" finds it; nonsense shows \"No recipes match\"",
       "actual": "lemon hits=1; nonsense no-match message=1",
       "evidence": [],
-      "ms": 1131
+      "ms": 1139
     },
     {
       "id": "library.edit",
       "name": "Edit a saved recipe in the library",
       "status": "pass",
       "expected": "Title saved as \"Weeknight Lemon Rice (edited)\"",
-      "actual": "recipe 5850e38d-f48b-4b85-aea3-bcd6575bfa47 heading updated",
+      "actual": "recipe 634b90d8-6200-4b31-8924-e5f7fc7ad2c9 heading updated",
       "evidence": [
         "qa/screenshots/13-library-edit.png"
       ],
-      "ms": 383
+      "ms": 354
     },
     {
       "id": "print.saved",
@@ -216,7 +216,7 @@
       "evidence": [
         "qa/screenshots/14-print-saved.png"
       ],
-      "ms": 246
+      "ms": 250
     },
     {
       "id": "list.view",
@@ -227,7 +227,7 @@
       "evidence": [
         "qa/screenshots/15-shopping-list.png"
       ],
-      "ms": 760
+      "ms": 768
     },
     {
       "id": "a11y.panel-keyboard",
@@ -236,7 +236,7 @@
       "expected": "Logical order through header, scale controls, actions; each with a visible focus indicator",
       "actual": "button:Decrease servings → input:servings-68 → button:Increase servings → select:Original unitsUS customaryMetr → button:Save → button:Print → button:Add to shopping list → button:Cook mode → button:Edit → button:Library → a:127.0.0.1 → (body) [NO FOCUS RING] → button:Library → button:Settings",
       "evidence": [],
-      "ms": 167
+      "ms": 171
     },
     {
       "id": "a11y.library-keyboard",
@@ -245,7 +245,7 @@
       "expected": "Skip link first, then nav, search, filters; visible focus",
       "actual": "a:Skip to content → a:Recipes → a:Shopping lists → a:Settings → button:New recipe → button:Import transcript → button:Manage collections → input:rp-search → select:All collections → select:All tags → a:Weeknight Lemon Rice (edited) → (body) [NO FOCUS RING]",
       "evidence": [],
-      "ms": 582
+      "ms": 579
     },
     {
       "id": "a11y.zoom-200-360",
@@ -257,7 +257,7 @@
         "qa/screenshots/19-panel-200pct-360.png",
         "qa/screenshots/20-library-200pct-360.png"
       ],
-      "ms": 2318
+      "ms": 2313
     },
     {
       "id": "a11y.dark-mode",
@@ -269,16 +269,16 @@
         "qa/screenshots/21-panel-dark.png",
         "qa/screenshots/22-library-dark.png"
       ],
-      "ms": 937
+      "ms": 945
     },
     {
       "id": "settings.export",
       "name": "Export backup downloads a JSON file",
       "status": "pass",
       "expected": "Backup JSON with saved recipes",
-      "actual": "file recipe-pocket-backup-2026-11-01.json, keys=format,version,recipes,collections,shoppingLists,images, recipes=1",
+      "actual": "file recipe-pocket-backup-2026-11-03.json, keys=format,version,recipes,collections,shoppingLists,images, recipes=1",
       "evidence": [],
-      "ms": 100
+      "ms": 102
     },
     {
       "id": "settings.import-skip",
@@ -289,7 +289,7 @@
       "evidence": [
         "qa/screenshots/16-import-preview.png"
       ],
-      "ms": 240
+      "ms": 239
     },
     {
       "id": "settings.import-duplicate",
@@ -298,7 +298,7 @@
       "expected": "Copies imported (N added)",
       "actual": "Import finished: 1 added, 0 replaced, 0 skipped.",
       "evidence": [],
-      "ms": 127
+      "ms": 126
     },
     {
       "id": "settings.delete-all",
@@ -309,7 +309,7 @@
       "evidence": [
         "qa/screenshots/17-delete-confirm.png"
       ],
-      "ms": 1757
+      "ms": 1740
     },
     {
       "id": "settings.session-only",
@@ -320,14 +320,146 @@
       "evidence": [
         "qa/screenshots/18-session-only.png"
       ],
-      "ms": 6037
+      "ms": 5980
+    },
+    {
+      "id": "live.smittenkitchen.com",
+      "name": "Live site https://smittenkitchen.com/2010/04/homemade-pop-tarts/",
+      "status": "pass",
+      "expected": "Real ingredients and ordered steps; no comments",
+      "actual": "{\"url\":\"https://smittenkitchen.com/2010/04/homemade-pop-tarts/\",\"http\":200,\"pageTitle\":\"homemade pop tarts – smitten kitchen\",\"panelH1\":\"homemade pop tarts\",\"ingredients\":14,\"steps\":8,\"ingredientGroups\":[\"Pastry\",\"Cinnamon Filling (enough for 9 tarts)\",\"Jam Filling\",\"Alternate fillings\"],\"stepGroups\":[],\"method\":\"dom\",\"candidates\":1,\"warnings\":[\"Recipe sections were inferred from the page layout; review ingredients and steps before saving.\"],\"firstIngredients\":[\"2 cups (8 1/2 ounces) all-purpose flour\",\"1 tablespoon sugar\",\"1 teaspoon salt\",\"1 cup (2 sticks or 8 ounces) unsalted butter, cut into pats\"],\"lastIngredients\":[\"3/4 cup (8 ounces) jam\",\"1 tablespoon cornstarch mixed with 1 tablespoon cold water\",\"9 tablespoons chocolate chips, 9 tablespoons Nutella or other chocolate-hazelnut paste or 9 tablespoons of a delight of your choice, such as salted caramel or a nut paste\"],\"firstSteps\":[\"To make cinnamon filling: Whisk together the sugar, cinnamon, and flour.\",\"To make jam filling: Mix the jam with the cornstarch/water in a small saucepan. Bring the mixture to a boil, and simmer,\"],\"lastStep\":\"Bake the tarts: Remove the tarts from the fridge, and bake them for 20 to 25 minutes, until they’re a light golden brown. Cool in pan on rack.\",\"notesSample\":\"Charming tip from King Arthur: Sprinkle the dough trimmings with cinnamon-sugar; these have nothing to do with your toaster pastries, but it’s a shame to discard them, and they make a wonderful snack.\",\"commentLeak\":false,\"stat",
+      "evidence": [
+        "qa/screenshots/live-smittenkitchen.com.png"
+      ],
+      "ms": 18856
+    },
+    {
+      "id": "live.joshuaweissman.com",
+      "name": "Live site https://www.joshuaweissman.com/recipes/the-best-chocolate-chips-cookies-recipe-ever",
+      "status": "pass",
+      "expected": "Real ingredients and ordered steps; no comments",
+      "actual": "{\"url\":\"https://www.joshuaweissman.com/recipes/the-best-chocolate-chips-cookies-recipe-ever\",\"http\":200,\"pageTitle\":\"The Best Chocolate Chips Cookies Recipe Ever | Chef Joshua Weissman\",\"panelH1\":\"The Best Chocolate Chip Cookies Ever\",\"ingredients\":13,\"steps\":7,\"ingredientGroups\":[],\"stepGroups\":[],\"method\":\"dom\",\"candidates\":1,\"warnings\":[\"Ingredients or steps were read from the visible page because the structured data was incomplete.\"],\"firstIngredients\":[\"½ cup (100g) granulated sugar\",\"¾ cup (150g) light brown sugar, packed\",\"½ cup (113g) unsalted butter, melted\",\"1 large egg\"],\"lastIngredients\":[\"3.5 oz (99g) 60-70% dark chocolate, roughly chopped *See Notes*\",\"½ cup (15g) kettle cooked salted potato chips, crushed coarsely by hand *optional*\",\"Flaky salt, for finishing\"],\"firstSteps\":[\"In a large bowl, whisk together the sugar, brown sugar, and melted butter until smooth. Whisk in the egg, followed by th\",\"Add the flour 1 half at a time and fold gently with a spatula just until combined. Do not overmix. Fold in the potato ch\"],\"lastStep\":\"Season to taste with flaky salt and let sit on the baking sheet for 5 minutes before transferring to a cooling rack. Serve warm or even at room temperature and \",\"notesSample\":\"I like to use roughly chopped chocolate over chocolate chips to add some textural variation as you’ll get some large pockets of chocolate and some smaller swirls or chocolate more evenly throughout th\",\"commentLeak\":false,\"status\":\"ok\"}",
+      "evidence": [
+        "qa/screenshots/live-joshuaweissman.com.png"
+      ],
+      "ms": 3573
+    },
+    {
+      "id": "live.allrecipes.com",
+      "name": "Live site https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/",
+      "status": "blocked",
+      "expected": "Readable page",
+      "actual": "HTTP 403; title \"Just a moment...\"",
+      "evidence": [
+        "qa/screenshots/live-allrecipes.com.png"
+      ],
+      "ms": 2013
+    },
+    {
+      "id": "live.simplyrecipes.com",
+      "name": "Live site https://www.simplyrecipes.com/recipes/banana_bread/",
+      "status": "blocked",
+      "expected": "Readable page",
+      "actual": "HTTP 403; title \"Just a moment...\"",
+      "evidence": [
+        "qa/screenshots/live-simplyrecipes.com.png"
+      ],
+      "ms": 2073
+    },
+    {
+      "id": "live.seriouseats.com",
+      "name": "Live site https://www.seriouseats.com/the-food-lab-best-chocolate-chip-cookie-recipe",
+      "status": "blocked",
+      "expected": "Readable page",
+      "actual": "HTTP 403; title \"Just a moment...\"",
+      "evidence": [
+        "qa/screenshots/live-seriouseats.com.png"
+      ],
+      "ms": 1947
+    },
+    {
+      "id": "live.bbcgoodfood.com",
+      "name": "Live site https://www.bbcgoodfood.com/recipes/easy-pancakes",
+      "status": "pass",
+      "expected": "Real ingredients and ordered steps; no comments",
+      "actual": "{\"url\":\"https://www.bbcgoodfood.com/recipes/easy-pancakes\",\"http\":200,\"pageTitle\":\"Easy pancakes recipe | Good Food\",\"panelH1\":\"Easy pancakes\",\"ingredients\":6,\"steps\":5,\"ingredientGroups\":[],\"stepGroups\":[],\"method\":\"json-ld\",\"candidates\":1,\"warnings\":[],\"firstIngredients\":[\"100g plain flour\",\"2 large eggs\",\"300ml milk\",\"1 tbsp sunflower or vegetable oil plus a little extra for frying\"],\"lastIngredients\":[\"1 tbsp sunflower or vegetable oil plus a little extra for frying\",\"lemon wedges to serve (optional)\",\"caster sugar to serve (optional)\"],\"firstSteps\":[\"Put 100g plain flour, 2 large eggs, 300ml milk, 1 tbsp sunflower or vegetable oil and a pinch of salt into a bowl or lar\",\"Set aside for 30 mins to rest if you have time, or start cooking straight away.\"],\"lastStep\":\"Serve with lemon wedges and caster sugar, or your favourite filling. Once cold, you can layer the pancakes between baking parchment, then wrap in cling film and\",\"notesSample\":\"\",\"commentLeak\":false,\"status\":\"ok\"}",
+      "evidence": [
+        "qa/screenshots/live-bbcgoodfood.com.png"
+      ],
+      "ms": 3199
+    },
+    {
+      "id": "live.budgetbytes.com",
+      "name": "Live site https://www.budgetbytes.com/creamy-tomato-spinach-pasta/",
+      "status": "blocked",
+      "expected": "Readable page",
+      "actual": "HTTP 403; title \"Just a moment...\"",
+      "evidence": [
+        "qa/screenshots/live-budgetbytes.com.png"
+      ],
+      "ms": 1917
+    },
+    {
+      "id": "live.recipetineats.com",
+      "name": "Live site https://www.recipetineats.com/spaghetti-bolognese/",
+      "status": "pass",
+      "expected": "Real ingredients and ordered steps; no comments",
+      "actual": "{\"url\":\"https://www.recipetineats.com/spaghetti-bolognese/\",\"http\":200,\"pageTitle\":\"Spaghetti Bolognese - RecipeTin Eats\",\"panelH1\":\"Spaghetti Bolognese\",\"ingredients\":16,\"steps\":10,\"ingredientGroups\":[],\"stepGroups\":[\"Tossing Sauce and Spaghetti (optional, Note 4)\"],\"method\":\"json-ld\",\"candidates\":1,\"warnings\":[],\"firstIngredients\":[\"1 1/2 tbsp olive oil\",\"2 garlic cloves (, minced)\",\"1 onion (, finely chopped (brown, yellow or white))\",\"1 lb / 500g beef mince (ground beef) (OR half pork, half beef (Note 1))\"],\"lastIngredients\":[\"1/2 tsp black pepper\",\"400 g / 13 oz spaghetti (, dried)\",\"Parmesan cheese (and finely chopped parsley (optional))\"],\"firstSteps\":[\"Sauté - Heat oil in a large pot or deep skillet over medium high heat. Add onion and garlic, cook for 3 minutes or until\",\"Cook beef - Turn heat up to high and add beef. Cook, breaking it up as your go, until browned.\"],\"lastStep\":\"Divide between bowls. Garnish with parmesan and parsley if desired.\",\"notesSample\":\"\",\"commentLeak\":false,\"status\":\"ok\"}",
+      "evidence": [
+        "qa/screenshots/live-recipetineats.com.png"
+      ],
+      "ms": 2802
+    },
+    {
+      "id": "live.loveandlemons.com",
+      "name": "Live site https://www.loveandlemons.com/banana-bread/",
+      "status": "pass",
+      "expected": "Real ingredients and ordered steps; no comments",
+      "actual": "{\"url\":\"https://www.loveandlemons.com/banana-bread/\",\"http\":200,\"pageTitle\":\"Banana Bread Recipe - Love and Lemons\",\"panelH1\":\"Banana Bread\",\"ingredients\":11,\"steps\":6,\"ingredientGroups\":[],\"stepGroups\":[],\"method\":\"json-ld\",\"candidates\":1,\"warnings\":[],\"firstIngredients\":[\"2 cups mashed very ripe banana (about 4 large)\",\"½ cup cane sugar or brown sugar\",\"½ cup melted butter or vegetable oil (plus more for the pan)\",\"2 large eggs\"],\"lastIngredients\":[\"½ teaspoon cinnamon\",\"¼ teaspoon nutmeg\",\"½ cup chopped walnuts (plus 2 tablespoons for topping)\"],\"firstSteps\":[\"Preheat the oven to 350°F and grease an 8x4 or 9x5-inch loaf pan.\",\"In a large bowl, whisk together the mashed banana, sugar, butter, eggs, and vanilla.\"],\"lastStep\":\"Bake for 50 to 60 minutes, or until a toothpick inserted comes out clean and the top springs back to the touch. I like to check the loaf after 40 minutes. If th\",\"notesSample\":\"\",\"commentLeak\":false,\"status\":\"ok\"}",
+      "evidence": [
+        "qa/screenshots/live-loveandlemons.com.png"
+      ],
+      "ms": 3005
+    },
+    {
+      "id": "live.cookieandkate.com",
+      "name": "Live site https://cookieandkate.com/best-lentil-soup-recipe/",
+      "status": "blocked",
+      "expected": "Readable page",
+      "actual": "HTTP 403; title \"Just a moment...\"",
+      "evidence": [
+        "qa/screenshots/live-cookieandkate.com.png"
+      ],
+      "ms": 1858
+    },
+    {
+      "id": "live.sallysbakingaddiction.com",
+      "name": "Live site https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/",
+      "status": "blocked",
+      "expected": "Readable page",
+      "actual": "HTTP 403; title \"Just a moment...\"",
+      "evidence": [
+        "qa/screenshots/live-sallysbakingaddiction.com.png"
+      ],
+      "ms": 1838
+    },
+    {
+      "id": "live.kingarthurbaking.com",
+      "name": "Live site https://www.kingarthurbaking.com/recipes/king-arthurs-original-cake-pan-cake-recipe",
+      "status": "pass",
+      "expected": "Real ingredients and ordered steps; no comments",
+      "actual": "{\"url\":\"https://www.kingarthurbaking.com/recipes/king-arthurs-original-cake-pan-cake-recipe\",\"http\":200,\"pageTitle\":\"King Arthur's Original Cake Pan Cake Recipe | King Arthur Baking\",\"panelH1\":\"King Arthur's Original Cake Pan Cake\",\"ingredients\":12,\"steps\":12,\"ingredientGroups\":[],\"stepGroups\":[],\"method\":\"json-ld\",\"candidates\":1,\"warnings\":[],\"firstIngredients\":[\"1 1/2 cups (180g) King Arthur Unbleached All-Purpose Flour\",\"1 cup (198g) granulated sugar\",\"1/4 cup (21g) unsweetened cocoa, Dutch-process or natural*\",\"1/2 teaspoon table salt\"],\"lastIngredients\":[\"1 teaspoon King Arthur Pure Vanilla Extract\",\"1 1/2 cups (255g) semisweet chocolate chips\",\"1/2 cup (113g) half-and-half*\"],\"firstSteps\":[\"Preheat the oven to 350°F. Lightly grease an 8\\\" square or 9\\\" round pan that's at least 2\\\" deep.\",\"To make the cake: In a medium bowl, whisk together the dry ingredients.\"],\"lastStep\":\"To bake cupcakes, line a standard muffin pan with cupcake papers and lightly grease the papers. Divide the batter evenly across the 12 cupcake wells and bake fo\",\"notesSample\":\"\",\"commentLeak\":false,\"status\":\"ok\"}",
+      "evidence": [
+        "qa/screenshots/live-kingarthurbaking.com.png"
+      ],
+      "ms": 3319
     },
     {
       "id": "privacy.zero-network",
       "name": "Zero external requests from extension pages / service worker across all flows",
       "status": "pass",
       "expected": "0 external requests",
-      "actual": "54 extension-initiated requests recorded, all chrome-extension://gdggjmbakokgbpdhoifmdcblinapcppk/ or data:/blob:; external=0",
+      "actual": "56 extension-initiated requests recorded, all chrome-extension://gdggjmbakokgbpdhoifmdcblinapcppk/ or data:/blob:; external=0",
       "evidence": [],
       "ms": 0
     },
@@ -341,9 +473,255 @@
       "ms": 0
     }
   ],
-  "live": [],
+  "live": [
+    {
+      "url": "https://smittenkitchen.com/2010/04/homemade-pop-tarts/",
+      "http": 200,
+      "pageTitle": "homemade pop tarts – smitten kitchen",
+      "panelH1": "homemade pop tarts",
+      "ingredients": 14,
+      "steps": 8,
+      "ingredientGroups": [
+        "Pastry",
+        "Cinnamon Filling (enough for 9 tarts)",
+        "Jam Filling",
+        "Alternate fillings"
+      ],
+      "stepGroups": [],
+      "method": "dom",
+      "candidates": 1,
+      "warnings": [
+        "Recipe sections were inferred from the page layout; review ingredients and steps before saving."
+      ],
+      "firstIngredients": [
+        "2 cups (8 1/2 ounces) all-purpose flour",
+        "1 tablespoon sugar",
+        "1 teaspoon salt",
+        "1 cup (2 sticks or 8 ounces) unsalted butter, cut into pats"
+      ],
+      "lastIngredients": [
+        "3/4 cup (8 ounces) jam",
+        "1 tablespoon cornstarch mixed with 1 tablespoon cold water",
+        "9 tablespoons chocolate chips, 9 tablespoons Nutella or other chocolate-hazelnut paste or 9 tablespoons of a delight of your choice, such as salted caramel or a nut paste"
+      ],
+      "firstSteps": [
+        "To make cinnamon filling: Whisk together the sugar, cinnamon, and flour.",
+        "To make jam filling: Mix the jam with the cornstarch/water in a small saucepan. Bring the mixture to a boil, and simmer,"
+      ],
+      "lastStep": "Bake the tarts: Remove the tarts from the fridge, and bake them for 20 to 25 minutes, until they’re a light golden brown. Cool in pan on rack.",
+      "notesSample": "Charming tip from King Arthur: Sprinkle the dough trimmings with cinnamon-sugar; these have nothing to do with your toaster pastries, but it’s a shame to discard them, and they make a wonderful snack.",
+      "commentLeak": false,
+      "status": "ok"
+    },
+    {
+      "url": "https://www.joshuaweissman.com/recipes/the-best-chocolate-chips-cookies-recipe-ever",
+      "http": 200,
+      "pageTitle": "The Best Chocolate Chips Cookies Recipe Ever | Chef Joshua Weissman",
+      "panelH1": "The Best Chocolate Chip Cookies Ever",
+      "ingredients": 13,
+      "steps": 7,
+      "ingredientGroups": [],
+      "stepGroups": [],
+      "method": "dom",
+      "candidates": 1,
+      "warnings": [
+        "Ingredients or steps were read from the visible page because the structured data was incomplete."
+      ],
+      "firstIngredients": [
+        "½ cup (100g) granulated sugar",
+        "¾ cup (150g) light brown sugar, packed",
+        "½ cup (113g) unsalted butter, melted",
+        "1 large egg"
+      ],
+      "lastIngredients": [
+        "3.5 oz (99g) 60-70% dark chocolate, roughly chopped *See Notes*",
+        "½ cup (15g) kettle cooked salted potato chips, crushed coarsely by hand *optional*",
+        "Flaky salt, for finishing"
+      ],
+      "firstSteps": [
+        "In a large bowl, whisk together the sugar, brown sugar, and melted butter until smooth. Whisk in the egg, followed by th",
+        "Add the flour 1 half at a time and fold gently with a spatula just until combined. Do not overmix. Fold in the potato ch"
+      ],
+      "lastStep": "Season to taste with flaky salt and let sit on the baking sheet for 5 minutes before transferring to a cooling rack. Serve warm or even at room temperature and ",
+      "notesSample": "I like to use roughly chopped chocolate over chocolate chips to add some textural variation as you’ll get some large pockets of chocolate and some smaller swirls or chocolate more evenly throughout th",
+      "commentLeak": false,
+      "status": "ok"
+    },
+    {
+      "url": "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/",
+      "http": 403,
+      "pageTitle": "Just a moment...",
+      "status": "blocked",
+      "reason": "HTTP 403; title \"Just a moment...\""
+    },
+    {
+      "url": "https://www.simplyrecipes.com/recipes/banana_bread/",
+      "http": 403,
+      "pageTitle": "Just a moment...",
+      "status": "blocked",
+      "reason": "HTTP 403; title \"Just a moment...\""
+    },
+    {
+      "url": "https://www.seriouseats.com/the-food-lab-best-chocolate-chip-cookie-recipe",
+      "http": 403,
+      "pageTitle": "Just a moment...",
+      "status": "blocked",
+      "reason": "HTTP 403; title \"Just a moment...\""
+    },
+    {
+      "url": "https://www.bbcgoodfood.com/recipes/easy-pancakes",
+      "http": 200,
+      "pageTitle": "Easy pancakes recipe | Good Food",
+      "panelH1": "Easy pancakes",
+      "ingredients": 6,
+      "steps": 5,
+      "ingredientGroups": [],
+      "stepGroups": [],
+      "method": "json-ld",
+      "candidates": 1,
+      "warnings": [],
+      "firstIngredients": [
+        "100g plain flour",
+        "2 large eggs",
+        "300ml milk",
+        "1 tbsp sunflower or vegetable oil plus a little extra for frying"
+      ],
+      "lastIngredients": [
+        "1 tbsp sunflower or vegetable oil plus a little extra for frying",
+        "lemon wedges to serve (optional)",
+        "caster sugar to serve (optional)"
+      ],
+      "firstSteps": [
+        "Put 100g plain flour, 2 large eggs, 300ml milk, 1 tbsp sunflower or vegetable oil and a pinch of salt into a bowl or lar",
+        "Set aside for 30 mins to rest if you have time, or start cooking straight away."
+      ],
+      "lastStep": "Serve with lemon wedges and caster sugar, or your favourite filling. Once cold, you can layer the pancakes between baking parchment, then wrap in cling film and",
+      "notesSample": "",
+      "commentLeak": false,
+      "status": "ok"
+    },
+    {
+      "url": "https://www.budgetbytes.com/creamy-tomato-spinach-pasta/",
+      "http": 403,
+      "pageTitle": "Just a moment...",
+      "status": "blocked",
+      "reason": "HTTP 403; title \"Just a moment...\""
+    },
+    {
+      "url": "https://www.recipetineats.com/spaghetti-bolognese/",
+      "http": 200,
+      "pageTitle": "Spaghetti Bolognese - RecipeTin Eats",
+      "panelH1": "Spaghetti Bolognese",
+      "ingredients": 16,
+      "steps": 10,
+      "ingredientGroups": [],
+      "stepGroups": [
+        "Tossing Sauce and Spaghetti (optional, Note 4)"
+      ],
+      "method": "json-ld",
+      "candidates": 1,
+      "warnings": [],
+      "firstIngredients": [
+        "1 1/2 tbsp olive oil",
+        "2 garlic cloves (, minced)",
+        "1 onion (, finely chopped (brown, yellow or white))",
+        "1 lb / 500g beef mince (ground beef) (OR half pork, half beef (Note 1))"
+      ],
+      "lastIngredients": [
+        "1/2 tsp black pepper",
+        "400 g / 13 oz spaghetti (, dried)",
+        "Parmesan cheese (and finely chopped parsley (optional))"
+      ],
+      "firstSteps": [
+        "Sauté - Heat oil in a large pot or deep skillet over medium high heat. Add onion and garlic, cook for 3 minutes or until",
+        "Cook beef - Turn heat up to high and add beef. Cook, breaking it up as your go, until browned."
+      ],
+      "lastStep": "Divide between bowls. Garnish with parmesan and parsley if desired.",
+      "notesSample": "",
+      "commentLeak": false,
+      "status": "ok"
+    },
+    {
+      "url": "https://www.loveandlemons.com/banana-bread/",
+      "http": 200,
+      "pageTitle": "Banana Bread Recipe - Love and Lemons",
+      "panelH1": "Banana Bread",
+      "ingredients": 11,
+      "steps": 6,
+      "ingredientGroups": [],
+      "stepGroups": [],
+      "method": "json-ld",
+      "candidates": 1,
+      "warnings": [],
+      "firstIngredients": [
+        "2 cups mashed very ripe banana (about 4 large)",
+        "½ cup cane sugar or brown sugar",
+        "½ cup melted butter or vegetable oil (plus more for the pan)",
+        "2 large eggs"
+      ],
+      "lastIngredients": [
+        "½ teaspoon cinnamon",
+        "¼ teaspoon nutmeg",
+        "½ cup chopped walnuts (plus 2 tablespoons for topping)"
+      ],
+      "firstSteps": [
+        "Preheat the oven to 350°F and grease an 8x4 or 9x5-inch loaf pan.",
+        "In a large bowl, whisk together the mashed banana, sugar, butter, eggs, and vanilla."
+      ],
+      "lastStep": "Bake for 50 to 60 minutes, or until a toothpick inserted comes out clean and the top springs back to the touch. I like to check the loaf after 40 minutes. If th",
+      "notesSample": "",
+      "commentLeak": false,
+      "status": "ok"
+    },
+    {
+      "url": "https://cookieandkate.com/best-lentil-soup-recipe/",
+      "http": 403,
+      "pageTitle": "Just a moment...",
+      "status": "blocked",
+      "reason": "HTTP 403; title \"Just a moment...\""
+    },
+    {
+      "url": "https://sallysbakingaddiction.com/chewy-chocolate-chip-cookies/",
+      "http": 403,
+      "pageTitle": "Just a moment...",
+      "status": "blocked",
+      "reason": "HTTP 403; title \"Just a moment...\""
+    },
+    {
+      "url": "https://www.kingarthurbaking.com/recipes/king-arthurs-original-cake-pan-cake-recipe",
+      "http": 200,
+      "pageTitle": "King Arthur's Original Cake Pan Cake Recipe | King Arthur Baking",
+      "panelH1": "King Arthur's Original Cake Pan Cake",
+      "ingredients": 12,
+      "steps": 12,
+      "ingredientGroups": [],
+      "stepGroups": [],
+      "method": "json-ld",
+      "candidates": 1,
+      "warnings": [],
+      "firstIngredients": [
+        "1 1/2 cups (180g) King Arthur Unbleached All-Purpose Flour",
+        "1 cup (198g) granulated sugar",
+        "1/4 cup (21g) unsweetened cocoa, Dutch-process or natural*",
+        "1/2 teaspoon table salt"
+      ],
+      "lastIngredients": [
+        "1 teaspoon King Arthur Pure Vanilla Extract",
+        "1 1/2 cups (255g) semisweet chocolate chips",
+        "1/2 cup (113g) half-and-half*"
+      ],
+      "firstSteps": [
+        "Preheat the oven to 350°F. Lightly grease an 8\" square or 9\" round pan that's at least 2\" deep.",
+        "To make the cake: In a medium bowl, whisk together the dry ingredients."
+      ],
+      "lastStep": "To bake cupcakes, line a standard muffin pan with cupcake papers and lightly grease the papers. Divide the batter evenly across the 12 cupcake wells and bake fo",
+      "notesSample": "",
+      "commentLeak": false,
+      "status": "ok"
+    }
+  ],
   "network": {
-    "total": 54,
+    "total": 56,
     "external": []
   },
   "errors": []

@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{ page.title | default: site.title | escape }}{% if page.title and page.title != site.title %} · Recipe Pocket{% endif %}</title>
 <meta name="description" content="{{ site.description | escape }}">
+<link rel="icon" type="image/png" href="{{ '/assets/icon128.png' | relative_url }}">
+<meta property="og:title" content="{{ page.title | default: site.title | escape }}">
+<meta property="og:description" content="{{ site.description | escape }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ '/assets/og.png' | absolute_url }}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
 <style>
 /* Kitchen notebook. System fonts only, no external requests. */
@@ -63,22 +70,93 @@ hr{border:0;border-top:1.5px dashed var(--line);margin:2em 0}
 footer.site{border-top:1.5px dashed var(--line);padding:20px 0 32px;font-size:.88rem;color:var(--muted)}
 footer.site a{color:var(--muted)}
 /* Home */
-.hero{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
-@media (min-width:700px){.hero{grid-template-columns:1.25fr 1fr}}
-.hero p.lede{font-size:1.15rem;margin:.2em 0 1em}
-.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
-.hero-card{width:100%;max-width:320px;justify-self:center;animation:float 4s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(-1deg)}}
-.promises{list-style:none;padding:0;margin:28px 0;background:var(--card);border:1.5px solid var(--line);border-top:3px solid var(--tomato);border-radius:4px 4px 12px 12px;box-shadow:0 10px 20px -16px rgb(60 40 20/.5)}
-.promises li{margin:0;padding:12px 16px 12px 48px;border-bottom:1px dashed var(--rule);position:relative}
-.promises li:last-child{border-bottom:0}
-.promises li::before{content:"✓";position:absolute;left:16px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--green);color:var(--on-green);font:700 .8rem/22px var(--sans);text-align:center}
-.promises strong{font-family:var(--serif)}
 .small{font-size:.9rem;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
+body.home main{padding:0}
+body.home header.site{padding:14px 0;background:var(--paper);border-bottom:1.5px dashed var(--line)}
+body.home header.site .wrap{max-width:76rem}
+.hero{--check:rgb(31 92 69/.25);padding:clamp(24px,5vw,64px) 16px clamp(36px,6vw,84px);background-color:#F5F0E3;background-image:linear-gradient(90deg,var(--check) 50%,transparent 50%),linear-gradient(var(--check) 50%,transparent 50%);background-size:64px 64px}
+.hero-grid{max-width:76rem;margin:0 auto;display:grid;gap:clamp(20px,3vw,40px);align-items:center}
+@media (min-width:980px){.hero-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}}
+.note{background:var(--card);padding:clamp(22px,3vw,40px);border-top:6px solid var(--tomato);box-shadow:0 18px 36px -14px rgb(23 50 40/.5)}
+@media (min-width:980px){.note{transform:rotate(-1.2deg)}}
+.note h1{display:block;background:none;padding:0;margin:0 0 .45em;font-size:clamp(2.3rem,4.6vw,3.7rem);line-height:1.03}
+.lede{font-size:1.12rem;margin:0 0 1.2em}
+.note .small{margin:0}
+.browser{min-width:0;background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 24px 50px -18px rgb(23 50 40/.65);border:1px solid rgb(23 50 40/.3)}
+.chrome{display:flex;align-items:center;gap:10px;padding:9px 12px;background:#E9E5DA;color:#3E443F}
+.dots{display:flex;gap:6px;flex:none}.dots i{width:11px;height:11px;border-radius:50%;background:#C9C3B3}
+.address{flex:1;min-width:0;background:#FBF9F3;border-radius:99px;padding:3px 14px;font:.8rem/1.5 var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hint{flex:none;font:700 .82rem/1 var(--sans);color:#FFFDF7;background:#B23A23;padding:7px 10px;border-radius:6px;position:relative;margin-right:3px;animation:nudge 1.6s ease-in-out 3}
+.hint::after{content:"";position:absolute;right:-6px;top:50%;margin-top:-6px;border:6px solid transparent;border-right:0;border-left-color:#B23A23}
+@keyframes nudge{50%{transform:translateX(-5px)}}
+.browser:not(.ready) .hint,.browser.open .hint{display:none}
+.ext{flex:none;width:38px;height:38px;padding:5px;background:#FBF9F3;border:1.5px solid #B9B3A3;border-radius:9px;cursor:pointer;transition:transform .12s ease-out}
+.ext:hover{transform:scale(1.07)}.ext:active{transform:scale(.95)}
+.browser.open .ext{background:#D8EBDF;border-color:#1F5C45}
+.ext img{display:block;width:100%;height:100%}
+.ext:focus-visible,.panel button:focus-visible,.panel h2:focus-visible{outline:3px solid #1A5FD0;outline-offset:2px}
+.viewport{position:relative;display:flex;height:clamp(440px,48vw,560px);overflow:hidden;background:#fff}
+.blog{flex:1;min-width:0;position:relative;padding:14px 22px;overflow:hidden;color:#333;font:.92rem/1.6 Georgia,serif;transition:filter .3s}
+.browser.open .blog{filter:saturate(.45) opacity(.72)}
+.blog p{margin:.7em 0}
+.blog-name{font:700 1.05rem Georgia,serif;margin:0 0 10px!important;padding-bottom:8px;border-bottom:1px solid #ddd}
+.blog-title{font:700 clamp(1.4rem,2.7vw,2rem)/1.14 Georgia,serif}
+.blog-by{font:.76rem var(--sans);color:#777}
+.ad{height:56px;display:grid;place-items:center;font:600 .68rem var(--sans);color:#888;background:repeating-linear-gradient(45deg,#eee 0 10px,#e3e3e3 10px 20px)}
+.ad.tall{height:112px}
+.popup{position:absolute;right:14px;bottom:14px;width:min(250px,70%);padding:12px;background:#fff;border:1px solid #bbb;box-shadow:0 10px 26px rgb(0 0 0/.22);font:.78rem/1.35 var(--sans)}
+.popup strong{display:block;font-size:.92rem;margin-bottom:3px}
+.popup span{display:block;margin-top:8px;padding:6px;text-align:center;font-weight:700;color:#fff;background:#B5301E;border-radius:3px}
+.panel{flex:none;width:0;overflow:hidden auto;visibility:hidden;background:#FAF6EC;color:#1F2A26;border-left:1px solid #BDB7A7;font:.9rem/1.45 var(--sans);transition:width .32s cubic-bezier(.2,.8,.2,1),visibility .32s}
+.browser:not(.ready) .panel,.browser.open .panel{width:min(310px,72%);visibility:visible}
+.panel>*{width:min(310px,100%);padding-inline:16px}
+.panel-brand{font:700 .95rem var(--serif);margin:0;padding-block:10px;border-bottom:1px dashed #D8CFBA}
+.panel-brand span{color:#B23A23}
+.panel h2{font:700 1.3rem/1.2 var(--serif);color:#1F2A26;margin:12px 0 10px;background:none}
+.servings{display:flex;align-items:center;gap:7px;font-weight:600}
+.servings span{margin-right:auto}
+.servings button{width:34px;height:34px;font:600 1.05rem/1 var(--sans);color:#1F2A26;background:#FFFDF7;border:1.5px solid #D8CFBA;border-radius:8px;box-shadow:0 2px 0 #D8CFBA;cursor:pointer}
+.servings button:disabled{opacity:.4;cursor:default}
+.servings output{min-width:2ch;text-align:center;font:700 1.15rem var(--serif)}
+.panel h3{font:700 1rem var(--serif);color:#1F5C45;margin:13px 0 4px}
+.panel ul,.panel ol{margin:0;padding-left:34px}
+.panel li{margin:.18em 0}
+.panel li::marker{color:#B23A23}
+.band{padding:clamp(40px,7vw,84px) 16px}
+.inner{max-width:68rem;margin:0 auto}
+.band h2{font-size:clamp(1.65rem,3.3vw,2.4rem);color:var(--ink);margin:0 0 .4em}
+.section-lede{max-width:40rem;font-size:1.08rem;margin:0 0 1.6em}
+.steps{list-style:none;counter-reset:s;padding:0;margin:0 0 20px;display:grid;gap:clamp(16px,3vw,36px)}
+@media (min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
+.steps li{counter-increment:s;margin:0}
+.steps li::before{content:counter(s);display:block;font:700 3rem/1 var(--serif);color:var(--tomato);margin-bottom:8px}
+.tour{background:var(--card);border-block:1.5px dashed var(--line)}
+.row{margin:0 0 clamp(44px,7vw,84px);display:grid;gap:clamp(18px,4vw,60px);align-items:center}
+.row:last-child{margin-bottom:0}
+@media (min-width:820px){.row{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}.row.flip figcaption{order:2}.row.flip{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+.row h2{font-size:clamp(1.5rem,2.8vw,2.05rem)}
+.row p{margin:0;max-width:30rem}
+.shot{overflow:hidden;border:1px solid var(--line);border-radius:10px;box-shadow:0 16px 32px -20px rgb(60 40 20/.55);background:#FAF6EC}
+.shot img{display:block;width:100%;height:auto}
+.tall-shot{max-width:400px;justify-self:center;width:100%}
+.private{background:#174A37;color:#F2F5EE}
+.private h2{color:#FFFDF7}
+.private dl{display:grid;gap:clamp(16px,3vw,40px);margin:clamp(20px,3vw,34px) 0}
+@media (min-width:760px){.private dl{grid-template-columns:repeat(3,1fr)}}
+.private dt{font:700 1.2rem var(--serif);margin-bottom:.2em}
+.private dd{margin:0;color:#D5E2D8}
+.private p{margin:0}
+.private a{color:#FFFDF7}
+.private a:focus-visible{outline-color:#FFFDF7}
+.last{text-align:center}
+.last h2{margin-bottom:.7em}
+@media (max-width:560px){.dots{display:none}.hint{font-size:.72rem;padding:6px 7px}.popup{display:none}.browser.open .panel{width:100%}.browser.open .blog{flex:0 0 0;padding:0}}
+@media (prefers-color-scheme:dark){.hero{background-color:#17201C;--check:rgb(124 200 162/.14)}.browser{border-color:#4A423B}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
-<body>
+<body{% if page.wide %} class="home"{% endif %}>
 <header class="site"><div class="wrap">
   <a class="logo" href="{{ '/' | relative_url }}">Recipe Pocket <span aria-hidden="true">✿</span></a>
   <nav class="tabs" aria-label="Site">
@@ -88,10 +166,10 @@ footer.site a{color:var(--muted)}
     <a href="https://github.com/elisamuel40/recipe-pocket">Source</a>
   </nav>
 </div></header>
-<main><div class="wrap">{{ content }}</div></main>
+{% if page.wide %}<main>{{ content }}</main>{% else %}<main><div class="wrap">{{ content }}</div></main>{% endif %}
 <footer class="site"><div class="wrap">
   Open source (MIT). No account, no analytics, no tracking. This page loads no third-party scripts or fonts.
-  · <a href="{{ '/terms.html' | relative_url }}">Usage notice</a> · <a href="{{ '/privacy.html' | relative_url }}">Privacy</a>
+  · <a href="{{ '/terms.html' | relative_url }}">Usage notice</a> · <a href="{{ '/privacy.html' | relative_url }}">Privacy</a> · <a href="https://github.com/elisamuel40/recipe-pocket/issues">Support</a>
 </div></footer>
 </body>
 </html>

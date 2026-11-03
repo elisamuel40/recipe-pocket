@@ -1,6 +1,6 @@
 {
   "name": "recipe-pocket",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Open-source, local-only Chrome extension for reading and managing recipes.",
   "license": "MIT",
@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "check": "npm run typecheck && npm test && npm run build && node scripts/audit-dist.mjs",
     "package": "npm run check && node scripts/package.mjs",
+    "store:assets": "npm run build && node scripts/store-assets.mjs",
     "e2e": "npm run build && node scripts/audit-dist.mjs && node tests/e2e/run.mjs"
   },
   "devDependencies": {

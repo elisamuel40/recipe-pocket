@@ -18,6 +18,9 @@ Public repository; MIT license for original project code/docs; docs/ as Jekyll s
 2. Create and push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`.
 3. `.github/workflows/release.yml` runs `npm run package` and publishes the release. The stable download link, https://github.com/elisamuel40/recipe-pocket/releases/latest/download/recipe-pocket.zip, then serves the new build.
 
+## Submit to the Chrome Web Store
+Follow `store/README.md`. Copy for every dashboard field is in `store/listing.md`, and images are in `store/assets/`.
+
 ## Public listing draft
 Recipe Pocket turns the recipe on your current page into a readable cooking view. Save recipes locally, organize collections, adjust servings, convert supported measurements, make shopping lists, and print or save a PDF. No account or analytics. All product data stays on your device. Site compatibility varies. Video features must be added to the listing only after their release gate passes.
 

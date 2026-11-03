@@ -4,7 +4,7 @@ title: Installation
 ---
 # Install Recipe Pocket in developer mode
 
-Recipe Pocket is not on the Chrome Web Store yet. You can install a development build with Chrome's **Load unpacked** option.
+{% if site.chrome_store_url %}The easiest way to install Recipe Pocket is from the [Chrome Web Store]({{ site.chrome_store_url }}). You can also install a build with Chrome's **Load unpacked** option, as described here.{% else %}Recipe Pocket is not on the Chrome Web Store yet. You can install a development build with Chrome's **Load unpacked** option.{% endif %}
 
 ## Option A: download a release ZIP
 1. [Download `recipe-pocket.zip`](https://github.com/elisamuel40/recipe-pocket/releases/latest/download/recipe-pocket.zip). This link always gets the latest version.

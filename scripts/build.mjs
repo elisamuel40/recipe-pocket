@@ -46,7 +46,7 @@ function copyStatic() {
   const manifest = JSON.parse(readFileSync(join(src, 'manifest.json'), 'utf8'));
   manifest.version = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
   writeFileSync(join(dist, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
-  for (const s of [16, 32, 48, 128]) writeFileSync(join(dist, 'icons', `icon${s}.png`), iconPng(s));
+  for (const s of [16, 32, 48, 128]) writeFileSync(join(dist, 'icons', `icon${s}.png`), iconPng(s, s === 128 ? 16 : 0));
   cpSync(join(root, 'LICENSE'), join(dist, 'LICENSE'));
   const notices = join(root, 'THIRD_PARTY_NOTICES.md');
   if (existsSync(notices)) cpSync(notices, join(dist, 'THIRD_PARTY_NOTICES.md'));

@@ -21,15 +21,16 @@ const chunk = (type, data) => {
 };
 
 /** Green rounded square with a white "pocket" (bowl) and a leaf. */
-export function iconPng(size) {
+export function iconPng(size, pad = 0) {
   const px = Buffer.alloc(size * size * 4);
   const green = [23, 99, 71];
   const leaf = [154, 205, 120];
-  const r = size * 0.22;
+  const art = size - 2 * pad;
+  const r = art * 0.22;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
-      const fx = (x + 0.5) / size, fy = (y + 0.5) / size;
-      const cx = Math.min(Math.max(x + 0.5, r), size - r), cy = Math.min(Math.max(y + 0.5, r), size - r);
+      const fx = (x - pad + 0.5) / art, fy = (y - pad + 0.5) / art;
+      const cx = Math.min(Math.max(x + 0.5, pad + r), size - pad - r), cy = Math.min(Math.max(y + 0.5, pad + r), size - pad - r);
       const inside = Math.hypot(x + 0.5 - cx, y + 0.5 - cy) <= r;
       let c = null;
       if (inside) {

@@ -1,0 +1,170 @@
+---
+layout: default
+title: Recipe Pocket
+wide: true
+---
+{% capture zip_url %}https://github.com/elisamuel40/recipe-pocket/releases/latest/download/recipe-pocket.zip{% endcapture %}
+<section class="hero">
+  <div class="hero-grid">
+    <div class="note">
+      <h1>Read the recipe, skip the life story.</h1>
+      <p class="lede">Recipe Pocket is a Chrome extension that pulls the ingredients and steps out of a recipe page. Scale them, convert them, print them and save them on your computer.</p>
+      <div class="actions">
+        {% if site.chrome_store_url %}
+        <a class="btn primary" href="{{ site.chrome_store_url }}">Add to Chrome</a>
+        {% else %}
+        <a class="btn primary" href="{{ zip_url }}">Download the extension</a>
+        <a class="btn" href="#install">How to install</a>
+        {% endif %}
+      </div>
+      <p class="small">Free and open source, for Chrome on a computer.</p>
+    </div>
+
+    <div class="browser" id="demo" aria-label="Interactive example of Recipe Pocket" role="group">
+      <div class="chrome">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="address">kitchen.example/the-best-lemon-rice</span>
+        <span class="hint" id="demo-hint" aria-hidden="true">Click the icon</span>
+        <button type="button" class="ext" id="demo-toggle" aria-expanded="false" aria-controls="demo-panel" aria-label="Read recipe">
+          <img src="{{ '/assets/icon128.png' | relative_url }}" alt="" width="26" height="26">
+        </button>
+      </div>
+      <div class="viewport">
+        <div class="blog" aria-hidden="true">
+          <p class="blog-name">Example Kitchen</p>
+          <div class="ad">Advertisement</div>
+          <p class="blog-title">The BEST Lemon Rice You’ll Ever Make</p>
+          <p class="blog-by">14 minute read, 2,381 comments</p>
+          <p>The first time I made this I was standing in my aunt’s kitchen, in the summer of the big storm, wearing a borrowed apron and absolutely no shoes.</p>
+          <div class="ad tall">Advertisement</div>
+          <p>Before we get to the food, let me tell you about that apron. It had belonged to three generations of very opinionated cooks.</p>
+          <p>My kids say this is the best thing I make. My kids also say that about cereal, so take that with a grain of salt. Speaking of salt…</p>
+          <div class="popup"><strong>Wait! Before you go…</strong>Join 80,000 home cooks and get my free ebook.<span>Sign me up</span></div>
+        </div>
+        <aside class="panel" id="demo-panel" aria-label="Recipe Pocket side panel">
+          <p class="panel-brand">Recipe Pocket <span aria-hidden="true">✿</span></p>
+          <h2 id="demo-title" tabindex="-1">Weeknight Lemon Rice</h2>
+          <div class="servings">
+            <span id="demo-servings-label">Servings</span>
+            <button type="button" id="demo-less" aria-label="Fewer servings">−</button>
+            <output id="demo-count" aria-labelledby="demo-servings-label" aria-live="polite">4</output>
+            <button type="button" id="demo-more" aria-label="More servings">+</button>
+          </div>
+          <h3>Ingredients</h3>
+          <ul id="demo-ingredients">
+            <li data-amount="3/2" data-rest="cups long-grain rice">1½ cups long-grain rice</li>
+            <li data-amount="9/4" data-rest="cups water">2¼ cups water</li>
+            <li data-amount="2/1" data-rest="tablespoons olive oil">2 tablespoons olive oil</li>
+            <li data-amount="1/4" data-rest="cup chopped parsley">¼ cup chopped parsley</li>
+          </ul>
+          <h3>Steps</h3>
+          <ol>
+            <li>Rinse the rice until the water runs clear.</li>
+            <li>Simmer it, covered, for 18 minutes.</li>
+            <li>Stir in the oil, lemon and parsley.</li>
+          </ol>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% unless site.chrome_store_url %}
+<section class="band install" id="install">
+  <div class="inner">
+    <h2>Install it in about a minute</h2>
+    <p class="section-lede">Recipe Pocket isn’t on the Chrome Web Store yet, so you add it through Chrome’s developer mode.</p>
+    <ol class="steps">
+      <li><strong><a href="{{ zip_url }}">Download the ZIP</a></strong> and unzip it into a folder you’ll keep.</li>
+      <li>Open <code>chrome://extensions</code> and turn on <strong>Developer mode</strong>.</li>
+      <li>Click <strong>Load unpacked</strong> and select the folder.</li>
+    </ol>
+    <p class="small"><a href="{{ '/install.html' | relative_url }}">See the full steps, including updates and removal.</a></p>
+  </div>
+</section>
+{% endunless %}
+
+<section class="band tour">
+  <div class="inner">
+    <figure class="row">
+      <figcaption><h2>Make it for eight</h2><p>Change the servings and every amount follows, with exact fractions. Switch between US and metric when you need to.</p></figcaption>
+      <div class="shot tall-shot"><img src="{{ '/assets/panel-scaled.png' | relative_url }}" alt="Side panel showing Weeknight Lemon Rice scaled to 8 servings in metric units" width="400" height="760" loading="lazy"></div>
+    </figure>
+    <figure class="row flip">
+      <figcaption><h2>Keep the ones you’ll make again</h2><p>Save a recipe and find it later by title, tag or ingredient. Nothing is saved until you choose <strong>Save</strong>.</p></figcaption>
+      <div class="shot"><img src="{{ '/assets/library.png' | relative_url }}" alt="Library page listing four saved recipes" width="900" height="800" loading="lazy"></div>
+    </figure>
+    <figure class="row">
+      <figcaption><h2>Shop from one list</h2><p>Send a recipe’s ingredients to a list. They’re sorted by aisle, and each one remembers which recipe it came from.</p></figcaption>
+      <div class="shot"><img src="{{ '/assets/list.png' | relative_url }}" alt="Shopping list with ingredients grouped by aisle" width="900" height="800" loading="lazy"></div>
+    </figure>
+    <figure class="row flip">
+      <figcaption><h2>Cook one step at a time</h2><p>Cook mode shows one step in large text, with ingredients to check off. Print a clean page or save it as a PDF when you’d rather use paper.</p></figcaption>
+      <div class="shot tall-shot"><img src="{{ '/assets/panel-cook.png' | relative_url }}" alt="Cook mode showing step 1 of 3 and a checklist of ingredients" width="400" height="800" loading="lazy"></div>
+    </figure>
+  </div>
+</section>
+
+<section class="band private">
+  <div class="inner">
+    <h2>Your recipes stay on this computer</h2>
+    <dl>
+      <div><dt>No account</dt><dd>There’s nothing to sign up for or log in to.</dd></div>
+      <div><dt>No network requests</dt><dd>The extension’s security policy blocks outside connections, and every build is checked for them.</dd></div>
+      <div><dt>Only the page you choose</dt><dd>It reads a page only when you click its icon, and it can’t see your browsing otherwise.</dd></div>
+    </dl>
+    <p><a href="{{ '/privacy.html' | relative_url }}">Read the privacy policy</a> or <a href="https://github.com/elisamuel40/recipe-pocket">check the source code</a>.</p>
+  </div>
+</section>
+
+<section class="band last">
+  <div class="inner">
+    <h2>Try it on the next recipe you open</h2>
+    {% if site.chrome_store_url %}
+    <a class="btn primary" href="{{ site.chrome_store_url }}">Add to Chrome</a>
+    {% else %}
+    <a class="btn primary" href="{{ zip_url }}">Download the extension</a>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+(function () {
+  var demo = document.getElementById('demo');
+  var toggle = document.getElementById('demo-toggle');
+  var count = document.getElementById('demo-count');
+  var less = document.getElementById('demo-less');
+  var more = document.getElementById('demo-more');
+  var items = document.querySelectorAll('#demo-ingredients li');
+  var BASE = 4, MIN = 1, MAX = 16, servings = BASE;
+  var GLYPH = { '1/2': '½', '1/3': '⅓', '2/3': '⅔', '1/4': '¼', '3/4': '¾', '1/8': '⅛', '3/8': '⅜', '5/8': '⅝', '7/8': '⅞' };
+  function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+  function format(n, d) {
+    var g = gcd(n, d); n /= g; d /= g;
+    var whole = Math.floor(n / d), rem = n - whole * d;
+    if (!rem) return String(whole);
+    var frac = GLYPH[rem + '/' + d] || (rem + '/' + d);
+    return whole ? whole + (GLYPH[rem + '/' + d] ? '' : ' ') + frac : frac;
+  }
+  function render() {
+    count.textContent = servings;
+    less.disabled = servings <= MIN;
+    more.disabled = servings >= MAX;
+    items.forEach(function (li) {
+      var parts = li.dataset.amount.split('/');
+      var n = Number(parts[0]) * servings, d = Number(parts[1]) * BASE;
+      var one = n <= d;
+      li.textContent = format(n, d) + ' ' + (one ? li.dataset.rest.replace(/^cups/, 'cup').replace(/^tablespoons/, 'tablespoon') : li.dataset.rest.replace(/^cup /, 'cups '));
+    });
+  }
+  demo.classList.add('ready');
+  toggle.addEventListener('click', function () {
+    var open = demo.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+    if (open) document.getElementById('demo-title').focus({ preventScroll: true });
+  });
+  less.addEventListener('click', function () { servings--; render(); });
+  more.addEventListener('click', function () { servings++; render(); });
+  render();
+})();
+</script>

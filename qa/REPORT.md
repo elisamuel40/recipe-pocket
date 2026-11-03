@@ -1,8 +1,8 @@
 # Recipe Pocket QA report: real-browser E2E run
 
-- **Date:** October 31, 2026 (America/Puerto_Rico); run finished 2026-11-01T03:51Z.
+- **Date:** November 2, 2026 (America/Puerto_Rico).
 - **Browser:** Chrome for Testing 153.0.8010.12 (Playwright Chromium build 1243), `--headless=new`, macOS arm64.
-- **Build:** commit `f26a1fe` plus the extractor fix committed with this report. `dist/` passed `scripts/audit-dist.mjs`.
+- **Build:** version 0.1.2, branch `store-readiness`, uncommitted tree recorded in `qa/e2e-results.json`. `dist/` passed `scripts/audit-dist.mjs`.
 - **Evidence:** `qa/e2e-results.json`, `qa/screenshots/` (fixture screenshots only; live-site screenshots are kept out of the repository because they show third-party content).
 - **Reproduce:** `npm run e2e`.
 
