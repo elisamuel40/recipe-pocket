@@ -7,8 +7,8 @@ title: Installation
 Recipe Pocket is not on the Chrome Web Store yet. You can install a development build with Chrome's **Load unpacked** option.
 
 ## Option A: download a release ZIP
-1. Open the project's [GitHub Releases](https://github.com/elisamuel40/recipe-pocket/releases) page and download `recipe-pocket-<version>.zip`.
-2. Optional: compare the file's SHA-256 checksum with the `.sha256` file in the release.
+1. [Download `recipe-pocket.zip`](https://github.com/elisamuel40/recipe-pocket/releases/latest/download/recipe-pocket.zip). This link always gets the latest version.
+2. Optional: to verify the download, get the versioned ZIP and its `.sha256` file from the [GitHub Releases](https://github.com/elisamuel40/recipe-pocket/releases) page and compare the checksums.
 3. Unzip it into a folder you will keep (Chrome loads the extension from that folder).
 4. Open `chrome://extensions` in Chrome.
 5. Turn on **Developer mode** (top-right corner).
@@ -26,7 +26,7 @@ Requires Node.js 24 or later.
 Open a recipe page, then click the Recipe Pocket icon. The side panel reads that page only when you click. Nothing is saved until you choose **Save**.
 
 ## Update or remove
-- To update, replace the folder contents with a newer build and click the reload icon on the extension card in `chrome://extensions`.
+- To update, [download the latest ZIP](https://github.com/elisamuel40/recipe-pocket/releases/latest/download/recipe-pocket.zip), replace the folder contents with its files and click the reload icon on the extension card in `chrome://extensions`.
 - Back up your recipes (Settings → Export backup) before removing the extension. Removing it deletes its local storage.
 
 GitHub Pages hosts these documents, not the extension runtime.

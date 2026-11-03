@@ -4,12 +4,12 @@ title: Recipe Pocket
 ---
 <section class="hero">
 <div>
-<p><span class="stamp">v0.1.0 · developer build</span></p>
+<p><span class="stamp">Developer build</span></p>
 <h1>Recipe Pocket</h1>
 <p class="lede">Read the recipe, skip the life story. A Chrome extension that pulls the ingredients and steps out of a recipe page, then lets you scale, convert, print and save them on your own computer.</p>
 <div class="actions">
-<a class="btn primary" href="install.html">Install in Chrome</a>
-<a class="btn" href="https://github.com/elisamuel40/recipe-pocket/releases/tag/v0.1.0">Download 0.1.0</a>
+<a class="btn primary" href="https://github.com/elisamuel40/recipe-pocket/releases/latest/download/recipe-pocket.zip">Download the extension</a>
+<a class="btn" href="install.html">Installation steps</a>
 </div>
 <p class="small">Not on the Chrome Web Store yet: you install it in Chrome's developer mode.</p>
 </div>

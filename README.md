@@ -1,7 +1,11 @@
 # Recipe Pocket — open-source Chrome extension build package
 Working name; trademark availability not checked. Prepared October 31, 2026.
 
-**Status:** version 0.1.0 developer build. Install it with Chrome's *Load unpacked* option: see [docs/install.md](docs/install.md). Real-browser QA results: [qa/REPORT.md](qa/REPORT.md).
+**Status:** developer build.
+
+**[Download `recipe-pocket.zip`](https://github.com/elisamuel40/recipe-pocket/releases/latest/download/recipe-pocket.zip)**, unzip it, turn on **Developer mode** in `chrome://extensions`, click **Load unpacked** and select the unzipped folder. Details: [docs/install.md](docs/install.md).
+
+Real-browser QA results: [qa/REPORT.md](qa/REPORT.md).
 
 This started as an implementation handoff. The extraction probe is executable research, not end-to-end app validation. No account, analytics, backend, subscription, or developer-held recipe data. Product UI lives inside Chrome. GitHub Pages hosts only public documentation, privacy policy and installation guidance.
 

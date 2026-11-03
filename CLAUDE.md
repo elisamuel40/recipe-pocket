@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## What this repository is
-**Recipe Pocket** (working name), a Manifest V3 desktop Chrome extension that reads, saves, scales, converts and prints recipes entirely on-device. The repo holds the specs, the extension source (`src/`), tests, a research probe, and GitHub Pages docs (`docs/`). Version 0.1.0 is a developer-mode build; audio/video speech recognition (R11) is a documented gate (`docs/video-gate.md`), not implemented. Never describe any feature, check or test as implemented or passing unless it was actually built and run.
+**Recipe Pocket** (working name), a Manifest V3 desktop Chrome extension that reads, saves, scales, converts and prints recipes entirely on-device. The repo holds the specs, the extension source (`src/`), tests, a research probe, and GitHub Pages docs (`docs/`). The current version is a developer-mode build, published by pushing a `vX.Y.Z` tag (`.github/workflows/release.yml`, steps in `RELEASE.md`); audio/video speech recognition (R11) is a documented gate (`docs/video-gate.md`), not implemented. Never describe any feature, check or test as implemented or passing unless it was actually built and run.
 
 Read in this order before changing anything: `PRD.md` (requirements R01–R14) → `ARCHITECTURE.md` (contracts) → `AGENTS.md` (work sequence, gates, definition of done) → `TESTING.md` + `site-probe-results.json` → `docs/privacy.md`, `docs/terms.md` → `RELEASE.md`.
 
