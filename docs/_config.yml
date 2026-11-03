@@ -3,5 +3,6 @@ description: A Chrome extension that pulls the recipe out of any page, then scal
 url: https://elisamuel40.github.io
 baseurl: /recipe-pocket
 markdown: kramdown
-# Paste the Chrome Web Store link here after approval. The site then shows "Add to Chrome" and hides the developer-mode steps.
-chrome_store_url: ""
+# After approval, add the store link after the colon. The site then shows "Add to Chrome" and hides the developer-mode steps.
+# Leave it blank until then: never use "", because Liquid treats an empty string as true.
+chrome_store_url:
