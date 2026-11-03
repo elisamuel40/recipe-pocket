@@ -254,6 +254,10 @@ function labeledIngredientLine(u: Unit | undefined): { label: string; rest: stri
   return l;
 }
 
+/** Text after the method that is never a step: rights lines and tag lists. */
+const COPYRIGHT_LINE = /^(copyright\b|©|\(c\)\s*\d)/i;
+const TAGS_HEADING = /^(tags?|categories|filed under)\s*:?$/i;
+
 interface Unit {
   kind: 'heading' | 'list' | 'para';
   level: number;
@@ -290,6 +294,13 @@ function isIngredientUnit(u: Unit, afterGroupHeading = false): boolean {
   return qty / u.lines.length >= 0.6;
 }
 
+/** A short paragraph styled as a heading: "Garlic Sauce" right above an ingredient list. */
+function isSectionLabel(u: Unit | undefined): u is Unit {
+  if (!u || u.kind !== 'para' || u.lines.length !== 1) return false;
+  const line = u.lines[0] as string;
+  return line.length <= 60 && !QTY_START.test(line) && !/[.!?;,]$/.test(line);
+}
+
 /** Infer a recipe from quantity-heavy line groups followed by method paragraphs. */
 export function layoutStrategy(blocks: Block[], meta: PageMeta, maxCandidates: number): Draft[] {
   const units = toUnits(blocks);
@@ -306,6 +317,7 @@ export function layoutStrategy(blocks: Block[], meta: PageMeta, maxCandidates: n
     let firstTitle = prev?.kind === 'heading' ? prev.text.replace(/:\s*$/, '') : '';
     let titleIndex = prev?.kind === 'heading' ? k - 2 : k - 1;
     let pending = firstTitle;
+    if (isSectionLabel(prev)) d.sectionLabel = (prev.lines[0] as string).replace(/:\s*$/, '');
     let j = k;
     while (j < units.length) {
       const u = units[j] as Unit;
@@ -380,6 +392,8 @@ export function layoutStrategy(blocks: Block[], meta: PageMeta, maxCandidates: n
     for (; j < units.length && stepCount < 60; j++) {
       const u = units[j] as Unit;
       if (isIngredientUnit(u)) break;
+      if (isSectionLabel(u) && units[j + 1] && isIngredientUnit(units[j + 1] as Unit)) break;
+      if (u.kind === 'heading' ? TAGS_HEADING.test(u.text) : COPYRIGHT_LINE.test(u.lines[0] ?? '')) break;
       if (isPageChrome(u.el) || (container && u.el && !container.contains(u.el))) break;
       if (u.kind === 'heading') {
         if (u.level <= 3) break;

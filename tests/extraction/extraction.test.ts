@@ -141,6 +141,51 @@ describe('JSON-LD', () => {
 });
 
 describe('fallbacks', () => {
+  it('reads every section from the page when JSON-LD describes only one of them', () => {
+    const r = one('jsonld-partial-section.html');
+    expect(r.title).toBe('Harvest Lentil Loaf');
+    expect(r.originalYield.text).toBe('Serves 4 to 6');
+    expect(r.extraction.method).toBe('dom');
+    expect(r.ingredientGroups.map((g) => [g.title, g.items.map((i) => i.raw)])).toEqual([
+      ['', ['2 cups cooked lentils', '1 cup rolled oats', '1 large onion, chopped', '2 tablespoons olive oil', 'Mustard Glaze (see recipe)']],
+      ['Mustard Glaze', ['1/2 cup ketchup', '2 tablespoons brown mustard', '1 tablespoon maple syrup']],
+    ]);
+    expect(r.instructionGroups.map((g) => [g.title, g.steps.map((s) => s.text)])).toEqual([
+      ['', ['Heat the oven to 375 degrees and oil a loaf pan.', 'Mash the lentils with the oats and onion, press into the pan and bake for 40 minutes. Serve with the Mustard Glaze.']],
+      ['Mustard Glaze', ['Whisk the ketchup, mustard and maple syrup in a small saucepan.', 'Simmer for 5 minutes and spoon the warm glaze over the loaf.']],
+    ]);
+    expect(allText(r)).not.toMatch(/Copyright|Dinner, Winter/);
+    expect(r.extraction.warnings.some((w) => /covered only part/.test(w))).toBe(true);
+  });
+
+  const partialPage = (jsonIngredients: string[], secondHeading: string): string => `<html><head>
+    <script type="application/ld+json">${JSON.stringify({ '@type': 'Recipe', name: 'Plum Tart', recipeIngredient: jsonIngredients, recipeInstructions: ['Whisk the cream with the sugar until soft.'] })}</script>
+    </head><body><main><h1>Plum Tart</h1>
+    <ul><li>6 ripe plums, sliced</li><li>1 sheet puff pastry</li><li>2 tablespoons sugar</li></ul>
+    <p>Lay the plums over the pastry and bake for 30 minutes.</p>
+    ${secondHeading}
+    <ul><li>1 cup heavy cream</li><li>1 tablespoon sugar</li><li>1 teaspoon vanilla</li></ul>
+    <p>Whisk the cream with the sugar until soft.</p>
+    </main></body></html>`;
+
+  it('keeps JSON-LD when it already lists the ingredients of every section', () => {
+    const all = ['6 ripe plums, sliced', '1 sheet puff pastry', '2 tablespoons sugar', '1 cup heavy cream', '1 tablespoon sugar', '1 teaspoon vanilla'];
+    const out = extractFromDocument(parseHtml(partialPage(all, '')), URL_);
+    if (!out.ok) throw new Error(out.code);
+    expect(out.candidates).toHaveLength(1);
+    expect(out.candidates[0]?.extraction.method).toBe('json-ld');
+    expect(ingredientLines(out.candidates[0] as RecipeV1)).toEqual(all);
+  });
+
+  it('does not combine a separately titled recipe on the page into the JSON-LD recipe', () => {
+    const cream = ['1 cup heavy cream', '1 tablespoon sugar', '1 teaspoon vanilla'];
+    const out = extractFromDocument(parseHtml(partialPage(cream, '<h2>Vanilla Cream</h2>')), URL_);
+    if (!out.ok) throw new Error(out.code);
+    expect(out.candidates).toHaveLength(1);
+    expect(out.candidates[0]?.extraction.method).toBe('json-ld');
+    expect(ingredientLines(out.candidates[0] as RecipeV1)).toEqual(cream);
+  });
+
   it('does not let an empty JSON-LD Recipe suppress the DOM fallback (Weissman-style)', () => {
     const r = one('empty-recipe-dom-fallback.html');
     expect(r.title).toBe('The Chewiest Oat Cookies');

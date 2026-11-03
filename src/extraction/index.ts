@@ -7,13 +7,16 @@
  * Pipeline: JSON-LD -> microdata -> recipe-card containers -> bounded DOM
  * fallback (heading sections, then layout inference). Later stages only fill
  * gaps in candidates they plausibly match (same title, or the single
- * candidate on a single-recipe page); separate recipes stay separate.
+ * candidate on a single-recipe page); separate recipes stay separate. One
+ * exception: JSON-LD that describes only one section of the recipe on the page
+ * gives way to the visible sections (see expandPartialRecipe).
  */
 import type { RecipeV1 } from '../shared/types';
 import type { ErrorCode } from '../shared/messages';
 import { ExtractionContext, finalize, hasIngredients, hasInstructions, isComplete, mergeInto, safeSourceUrl, sameRecipe, type Draft } from './draft';
 import { extractCards, extractDomFallback, extractMicrodata, readPageMeta } from './dom';
 import { extractJsonLd } from './jsonld';
+import { titleKey } from './text';
 
 export const LIMITS = {
   /** Max characters of text/structured data processed. */
@@ -31,6 +34,7 @@ export const MERGE_NOTES = {
   microdata: 'Some fields were read from page markup (microdata) because the structured data was incomplete.',
   card: 'Some fields were read from the recipe card on the page because the structured data was incomplete.',
   dom: 'Ingredients or steps were read from the visible page because the structured data was incomplete.',
+  partial: 'The structured data covered only part of this recipe, so all sections were read from the visible page.',
 } as const;
 
 const useful = (d: Draft): boolean => hasIngredients(d) || hasInstructions(d);
@@ -52,6 +56,41 @@ function absorb(primary: Draft[], secondary: Draft[], note: string): void {
       primary.push(s);
     }
   }
+}
+
+/** Share of the structured recipe's ingredient lines that a visible section also lists. */
+function ingredientCoverage(recipe: Draft, section: Draft): number {
+  const keys = (d: Draft): string[] => d.ingredientGroups.flatMap((g) => g.lines.map(titleKey));
+  const wanted = keys(recipe);
+  const found = new Set(keys(section));
+  return wanted.length ? wanted.filter((k) => found.has(k)).length / wanted.length : 0;
+}
+
+/**
+ * Some CMS templates fill JSON-LD from a single field, so a complete-looking
+ * recipe holds only one section (for example a sauce) and omits the main dish.
+ * Replace its ingredients and steps when the visible page shows that section
+ * plus at least one more under the same title. No heading separates such
+ * sections, so they are one recipe, not separate recipes (PRD R02).
+ */
+function expandPartialRecipe(recipe: Draft, visible: Draft[]): void {
+  const sections = visible.filter((v) => sameRecipe(recipe, v) && hasIngredients(v) && hasInstructions(v));
+  const isDescribed = (v: Draft): boolean => ingredientCoverage(recipe, v) >= 0.8;
+  const firstDescribed = sections.findIndex(isDescribed);
+  if (firstDescribed < 0) return;
+  // A later section with the same ingredients is a repeat of that section (a print copy, for example).
+  const parts = sections.filter((v, i) => i === firstDescribed || !isDescribed(v));
+  if (parts.length < 2) return;
+
+  const first = parts[0] as Draft;
+  if (first.title.length < recipe.title.length) recipe.title = first.title;
+  // The first section is the main dish; a line above its list is not its name (often a byline or book title).
+  const titled = <G extends { title: string }>(g: G, i: number): G => ({ ...g, title: g.title || (i > 0 && parts[i]?.sectionLabel) || '' });
+  recipe.ingredientGroups = parts.flatMap((p, i) => p.ingredientGroups.map((g) => titled(g, i)));
+  recipe.instructionGroups = parts.flatMap((p, i) => p.instructionGroups.map((g) => titled(g, i)));
+  if (!recipe.notes.length) recipe.notes = parts.flatMap((p) => p.notes);
+  recipe.method = 'dom';
+  recipe.warnings.push(MERGE_NOTES.partial, ...new Set(parts.flatMap((p) => p.warnings)));
 }
 
 function safely<T>(ctx: ExtractionContext, label: string, fn: () => T[]): T[] {
@@ -96,6 +135,14 @@ export function extractFromDocument(doc: Document, pageUrl: string): ExtractionO
   // 4. Bounded DOM fallback. An empty Recipe object must not suppress this.
   if (!drafts.length || drafts.some((d) => !isComplete(d))) {
     absorb(drafts, safely(ctx, 'page text', () => extractDomFallback(doc, ctx, meta)), MERGE_NOTES.dom);
+  }
+
+  // 5. A complete-looking single recipe may still describe only part of the page.
+  const single = drafts.length === 1 ? (drafts[0] as Draft) : undefined;
+  if (single?.method === 'json-ld' && isComplete(single)) {
+    // A separate context: this check must not consume the input budget or add warnings of its own.
+    const scratch = new ExtractionContext(LIMITS.maxInputChars, LIMITS.maxDepth, LIMITS.maxCandidates);
+    expandPartialRecipe(single, safely(ctx, 'page text', () => extractDomFallback(doc, scratch, meta)));
   }
 
   const usable = drafts.filter(useful);

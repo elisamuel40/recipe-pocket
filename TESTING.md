@@ -9,7 +9,7 @@ Use all twelve URLs in JSON, including both supplied URLs. For each: open normal
 Special cases: Smitten Kitchen must preserve pastry and filling alternatives and exclude lengthy comments. Joshua Weissman must fall through incomplete JSON-LD to the visible ingredient/instruction sections. BBC/Good Food: verify any redirect and final source attribution. Other six structured candidates must be reviewed for grouping and ordering; counts alone cannot establish correctness. Blocked domains require ordinary-browser retest.
 
 ## Automated cases
-- JSON-LD array/@graph, @type array, malformed neighboring block, @id cycles, ItemList, nested HowToSection and multiple recipes.
+- JSON-LD array/@graph, @type array, malformed neighboring block, @id cycles, ItemList, nested HowToSection, multiple recipes, and JSON-LD that describes only one section of the visible recipe.
 - Empty Recipe with complete DOM fallback; no recipe; SPA navigation during request; repeated invocation; restricted chrome:// pages.
 - Quantities: mixed/Unicode fractions, decimal comma ambiguity, ranges, package sizes, “to taste”, temperatures, units and unitless quantities. 1/3 × 3 = 1, reset after 100 transforms remains exact.
 - Mass/volume dimensional checks; unknown density never converts cups to grams. US versus metric cup choice explicit.

@@ -36,6 +36,8 @@ export interface Draft {
   instructionGroups: { title: string; steps: string[] }[];
   /** Steps exist but look damaged (e.g. nested lists flattened); a later stage may replace them. */
   suspectInstructions?: boolean;
+  /** Short line right above the ingredient list that names this part of the page ("Garlic Sauce"). */
+  sectionLabel?: string;
   notes: string[];
   warnings: string[];
 }
